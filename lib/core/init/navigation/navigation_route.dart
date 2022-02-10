@@ -5,7 +5,6 @@ import 'package:first_three/view/home/home_view.dart';
 import 'package:first_three/view/login/login_view.dart';
 import 'package:first_three/view/otp_sign/otp_sign_view.dart';
 import 'package:first_three/view/profile/profile_view.dart';
-import 'package:first_three/view/rank_table/rank_table_view.dart';
 import 'package:first_three/view/second_page/second_page.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +17,7 @@ class NavigationRoute {
   Route<dynamic> generateRoute(RouteSettings args) {
     switch (args.name) {
       case NavigationConstants.HOME_VIEW:
-        return normalNavigate( HomeView(), NavigationConstants.HOME_VIEW);
+        return normalNavigate(HomeView(), NavigationConstants.HOME_VIEW);
       case NavigationConstants.SECOND_PAGE:
         return normalNavigate(SecondPage(), NavigationConstants.SECOND_PAGE);
       case NavigationConstants.OTP_SIGN:
@@ -28,12 +27,9 @@ class NavigationRoute {
       case NavigationConstants.LOGIN_PAGE:
         return normalNavigate(
             const LoginView(), NavigationConstants.LOGIN_PAGE);
-       case NavigationConstants.PROFILE:
+      case NavigationConstants.PROFILE:
         return normalNavigate(ProfileView(), NavigationConstants.PROFILE);
-          case NavigationConstants.RANK_TABLE:
-        final arguments = args.arguments as String;
-        return normalNavigate(RankTableView(), NavigationConstants.RANK_TABLE,
-            args: arguments);
+
       default:
         return MaterialPageRoute(
           builder: (context) => const NotFound(),
@@ -58,7 +54,7 @@ class NavigationRoute {
           );
         },
         pageBuilder: (context, animation, secondaryAnimation) => widget,
-        
+
         //analytciste görülecek olan sayfa ismi için pageName veriyoruz
         settings: RouteSettings(name: pageName, arguments: args));
   }
