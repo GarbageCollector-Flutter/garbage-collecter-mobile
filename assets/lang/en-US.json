@@ -1,0 +1,18 @@
+{
+    "welcome":"Welcome to my application my friend",
+    "light_Theme":"light theme",
+    "dark_Theme":"dark theme",
+    "en":"english",
+    "de":"german",
+    "four_zero_four":"this file doesn't exist",
+    "first_page":"first page",
+    "second_page":"second page",
+    "next_page":"next page",
+    "previous_page":"previous_page",
+    "user_name":"username",
+    "save_user":"save user",
+    "delete_all":"delete all",
+    "back_to_home":"back to home",
+    "age":"age",
+    "database_page":"database page"
+}
