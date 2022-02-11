@@ -153,7 +153,14 @@ class _HomeViewState extends BaseState<HomeView> {
                   child: GameModeCard(
                     maxHeight: 150,
                     maxWidth: 500,
-                    icon:  Text("fotoğraf eklenecek"),
+                      icon: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ClipRRect(
+                       borderRadius: BorderRadius.circular(8.0),
+                       
+                      child: Image.network(item.beforePhoto[0], fit: BoxFit.fill,)),
+                  ),
+                //    icon:  Text("fotoğraf eklenecek"),
                     firstTitle: item.operationName,
                     subTitle:item.operationStart.toString(),
                     onTap: () {
@@ -178,7 +185,14 @@ class _HomeViewState extends BaseState<HomeView> {
                   child: GameModeCard(
                     maxHeight: 150,
                     maxWidth: 500,
-                    icon: Text("fotoğraf eklenecek"),
+                  //  icon: Text("fotoğraf eklenecek"),
+                  icon: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ClipRRect(
+                       borderRadius: BorderRadius.circular(8.0),
+                       
+                      child: Image.network(item.beforePhoto[0], fit: BoxFit.fill,)),
+                  ),
                     firstTitle: item.location,
                     subTitle:item.operationStart.toString(),
                     onTap: () {
