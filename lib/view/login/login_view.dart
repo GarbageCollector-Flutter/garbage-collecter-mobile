@@ -8,7 +8,7 @@ import 'package:first_three/core/components/widgets/input_widgets/login_inputter
 import 'package:first_three/core/components/widgets/buttons/sign_button.dart';
 import 'package:first_three/core/components/widgets/others/animated_label.dart';
 import 'package:first_three/core/init/lang/locale_keys.g.dart';
-import 'package:first_three/model/player/player_model.dart';
+import 'package:first_three/model/user/user_model.dart';
 import 'package:first_three/view/login/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -39,8 +39,12 @@ class _LoginViewState extends BaseState<LoginView> {
           return DefaultDialog(
             height: dynamicHeight(0.4),
             title: Padding(
-              padding: const EdgeInsets.symmetric(horizontal:50.0),
-              child: Text(e,style: TextStyle(color: Colors.white,fontSize: 25),textAlign: TextAlign.center,),
+              padding: const EdgeInsets.symmetric(horizontal: 50.0),
+              child: Text(
+                e,
+                style: TextStyle(color: Colors.white, fontSize: 25),
+                textAlign: TextAlign.center,
+              ),
             ),
             buttons: [
               CancelButton(
@@ -70,15 +74,6 @@ class _LoginViewState extends BaseState<LoginView> {
         onModelReady: (model) {
           viewModel = model as LoginViewModel;
           viewModel.setContext(this.context);
-          // focusNodeLoginPhone.addListener(() {
-          //   setState(() {});
-          // });
-          // focusNodeRegisterPhone.addListener(() {
-          //   setState(() {});
-          // });
-          // focusNodeRegisterName.addListener(() {
-          //   setState(() {});
-          // });
         },
         onPageBuilder: (context, value) => scaffold);
   }
@@ -103,8 +98,6 @@ class _LoginViewState extends BaseState<LoginView> {
     return Stack(children: [
       background,
       foreground,
-      // naviagateButtons,
-      // languageButtonsWidget
     ]);
   }
 
@@ -170,10 +163,6 @@ class _LoginViewState extends BaseState<LoginView> {
         curve: Curves.fastOutSlowIn,
         duration: const Duration(seconds: 1),
         color: Colors.red,
-        // child: Image.asset(
-        //   'assets/logos/withoutText.png',
-        //   color: Colors.white,
-        // ),
       );
 
   Widget get formFields => Expanded(
@@ -211,11 +200,14 @@ class _LoginViewState extends BaseState<LoginView> {
                   width: 180,
                   child: SignButton(
                     text: "Giriş",
-                    onTap: () async{
-                      try{
-                     await viewModel.loginRequest(PlayerModel(phone: viewModel.phoneNumberLogin.text));
-
-                      }catch(e){
+                    onTap: () async {
+                      try {
+                        await viewModel.loginRequest(UserModel(
+                          name: "",
+                          phone: viewModel.phoneNumberLogin.text,
+                          joinedOperations: [],
+                        ));
+                      } catch (e) {
                         errorDialog(e.toString());
                       }
                     },
@@ -265,10 +257,12 @@ class _LoginViewState extends BaseState<LoginView> {
                     text: "Kayıt",
                     onTap: () async {
                       try {
-                        await viewModel.registerRequest(PlayerModel(
+                        await viewModel.registerRequest(UserModel(
+                            joinedOperations: [],
                             name: viewModel.nameController.text,
                             phone: viewModel.phoneNumberRegister.text));
-                          await viewModel.loginRequest(PlayerModel(
+                        await viewModel.loginRequest(UserModel(
+                            joinedOperations: [],
                             name: viewModel.nameController.text,
                             phone: viewModel.phoneNumberRegister.text));
                       } catch (e) {

@@ -7,7 +7,7 @@ import 'package:first_three/core/components/widgets/buttons/sign_button.dart';
 import 'package:first_three/core/constants/navigation/navigation_constants.dart';
 import 'package:first_three/core/init/lang/locale_keys.g.dart';
 import 'package:first_three/core/init/navigation/navigation_service.dart';
-import 'package:first_three/model/player/player_model.dart';
+import 'package:first_three/model/user/user_model.dart';
 import 'package:first_three/view/otp_sign/otp_sign_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -41,8 +41,8 @@ class _OtpSignViewState extends BaseState<OtpSignView> {
         onModelReady: (model) {
           viewModel = model as OtpSignViewModel;
           viewModel.setContext(this.context);
-          viewModel.playerModel =
-              ModalRoute.of(context)!.settings.arguments as PlayerModel;
+          viewModel.userModel =
+              ModalRoute.of(context)!.settings.arguments as UserModel;
           viewModel
               .phoneVerification()
               .then((value) => {print("doldurma ekranı çıkacak")});
@@ -206,23 +206,5 @@ class _OtpSignViewState extends BaseState<OtpSignView> {
             fontWeight: FontWeight.normal, fontSize: 20, color: Colors.black87),
       );
 
-  Widget get buttons => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          ElevatedButton(
-            child: const LocalText(value: LocaleKeys.next_page),
-            onPressed: () {
-              NavigationService.instance
-                  .navigateToPage(path: NavigationConstants.SECOND_PAGE);
-            },
-          ),
-          ElevatedButton(
-            child: const LocalText(value: LocaleKeys.previous_page),
-            onPressed: () {
-              NavigationService.instance
-                  .navigateToPageClear(path: NavigationConstants.LOGIN_PAGE);
-            },
-          )
-        ],
-      );
+
 }

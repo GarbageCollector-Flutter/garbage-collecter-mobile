@@ -2,7 +2,7 @@
 
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:first_three/model/player/player_model.dart';
+import 'package:first_three/model/user/user_model.dart';
 
 class Auth {
 
@@ -14,10 +14,10 @@ class Auth {
   Auth();
 
 
-  Future<PhoneAuthCredential?> phoneSignIn({required PlayerModel playerModel,required dynamic onSms,required dynamic onverificationId}) async {
+  Future<PhoneAuthCredential?> phoneSignIn({required UserModel userModel,required dynamic onSms,required dynamic onverificationId}) async {
 
     await _auth.verifyPhoneNumber(
-        phoneNumber: playerModel.phone!,
+        phoneNumber: userModel.phone,
         verificationCompleted:onSms,
         verificationFailed: _onVerificationFailed,
         codeSent: onverificationId,

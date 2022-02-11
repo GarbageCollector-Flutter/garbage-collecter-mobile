@@ -9,44 +9,44 @@ part of 'home_view_model.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HomeViewModel on _HomeViewModelBase, Store {
-  final _$outDatedTournamentsAtom =
-      Atom(name: '_HomeViewModelBase.outDatedTournaments');
+  final _$outDatedOpertaionsAtom =
+      Atom(name: '_HomeViewModelBase.outDatedOpertaions');
 
   @override
-  List<TournamentModel> get outDatedTournaments {
-    _$outDatedTournamentsAtom.reportRead();
-    return super.outDatedTournaments;
+  List<OperationModel> get outDatedOpertaions {
+    _$outDatedOpertaionsAtom.reportRead();
+    return super.outDatedOpertaions;
   }
 
   @override
-  set outDatedTournaments(List<TournamentModel> value) {
-    _$outDatedTournamentsAtom.reportWrite(value, super.outDatedTournaments, () {
-      super.outDatedTournaments = value;
+  set outDatedOpertaions(List<OperationModel> value) {
+    _$outDatedOpertaionsAtom.reportWrite(value, super.outDatedOpertaions, () {
+      super.outDatedOpertaions = value;
     });
   }
 
-  final _$continuingTournamentsAtom =
-      Atom(name: '_HomeViewModelBase.continuingTournaments');
+  final _$continuingOpertaionsAtom =
+      Atom(name: '_HomeViewModelBase.continuingOpertaions');
 
   @override
-  List<TournamentModel> get continuingTournaments {
-    _$continuingTournamentsAtom.reportRead();
-    return super.continuingTournaments;
+  List<OperationModel> get continuingOpertaions {
+    _$continuingOpertaionsAtom.reportRead();
+    return super.continuingOpertaions;
   }
 
   @override
-  set continuingTournaments(List<TournamentModel> value) {
-    _$continuingTournamentsAtom.reportWrite(value, super.continuingTournaments,
+  set continuingOpertaions(List<OperationModel> value) {
+    _$continuingOpertaionsAtom.reportWrite(value, super.continuingOpertaions,
         () {
-      super.continuingTournaments = value;
+      super.continuingOpertaions = value;
     });
   }
 
   @override
   String toString() {
     return '''
-outDatedTournaments: ${outDatedTournaments},
-continuingTournaments: ${continuingTournaments}
+outDatedOpertaions: ${outDatedOpertaions},
+continuingOpertaions: ${continuingOpertaions}
     ''';
   }
 }

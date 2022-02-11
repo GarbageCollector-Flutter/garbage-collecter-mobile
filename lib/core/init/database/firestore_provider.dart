@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:first_three/core/init/database/database_model.dart';
 
 abstract class FirestoreProvider<T extends DatabaseModel> {
-   CollectionReference<Map<String, dynamic>>? collectionReference;
+ late  CollectionReference<Map<String, dynamic>> collectionReference;
 void setCollectionReference(CollectionReference<Map<String, dynamic>> collectionReference);
 
   Future<T?> getItem(String id);

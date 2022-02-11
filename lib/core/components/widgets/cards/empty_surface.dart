@@ -15,6 +15,7 @@ class _EmptySurfaceState extends State<EmptySurface> {
   
       
        margin: const EdgeInsets.all(10),
+       padding: const EdgeInsets.all(10),
        decoration :BoxDecoration(
     borderRadius: BorderRadius.circular(12),
     color: Colors.white,

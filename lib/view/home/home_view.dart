@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:first_three/core/base/state/base_state.dart';
 import 'package:first_three/core/base/view/base_view.dart';
 import 'package:first_three/core/components/widgets/cards/empty_surface.dart';
@@ -6,7 +7,7 @@ import 'package:first_three/core/components/widgets/cards/game_mode_card.dart';
 import 'package:first_three/core/components/widgets/others/my_appbar.dart';
 import 'package:first_three/core/constants/navigation/navigation_constants.dart';
 import 'package:first_three/core/init/navigation/navigation_service.dart';
-import 'package:first_three/model/tournament/tournament_model.dart';
+import 'package:first_three/model/operations/operation_model.dart';
 import 'package:first_three/view/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -23,8 +24,9 @@ class _HomeViewState extends BaseState<HomeView> {
   bool _isMenuOpen = false;
   late HomeViewModel viewModel;
   void onTapProfile() {
-    NavigationService.instance
-        .navigateToPage(path: NavigationConstants.PROFILE);
+    FirebaseAuth.instance.signOut();
+    // NavigationService.instance
+    //     .navigateToPage(path: NavigationConstants.PROFILE);
   }
 
   @override
@@ -34,11 +36,7 @@ class _HomeViewState extends BaseState<HomeView> {
         onModelReady: (model) async {
           viewModel = model as HomeViewModel;
           viewModel.setContext(this.context);
-          await viewModel.getPlayer();
-          await viewModel.getTournaments();
-          Future.delayed(Duration(seconds: 1)).then((value) {
-            setState(() {});
-          });
+         await viewModel.getAllOperations();
         },
         onPageBuilder: (context, value) => scaffold);
   }
@@ -75,7 +73,7 @@ class _HomeViewState extends BaseState<HomeView> {
                       "profil": onTapProfile,
                       "ayarlar": onTapProfile,
                     },
-                    title: Text("Anasayfa",
+                    title: Text("Akış",
                         style: TextStyle(
                             fontSize: 20,
                             color: _isMenuOpen
@@ -95,7 +93,7 @@ class _HomeViewState extends BaseState<HomeView> {
               children: [
                 SizedBox(
                   width: dynamicWidth(0.6),
-                  height: 60,
+                  height: 100,
                   child: EmptySurface(
                     child: TabBar(
                       indicatorPadding:
@@ -127,10 +125,7 @@ class _HomeViewState extends BaseState<HomeView> {
         ),
       );
   Widget get tabFields => Container(
-        height: viewModel.continuingTournaments.length <
-                viewModel.outDatedTournaments.length
-            ? viewModel.continuingTournaments.length * 200
-            : viewModel.outDatedTournaments.length * 200, //itemSize * 180,
+        height: 1000, //itemSize * 180,
         width: double.infinity,
         child: TabBarView(
           children: [continuing, outDated],
@@ -143,18 +138,18 @@ class _HomeViewState extends BaseState<HomeView> {
         builder: (context) {
           return Column(
             children: [
-              for (TournamentModel item in viewModel.continuingTournaments)
+              for (OperationModel item in viewModel.continuingOpertaions)
                 Container(
                   margin: const EdgeInsets.only(bottom: 15.0),
                   child: GameModeCard(
                     maxHeight: 150,
                     maxWidth: 500,
-                    icon: Image.asset("assets/card_icons/tournament_icon.png"),
-                    firstTitle: item.gameName!,
-                    subTitle: item.gameMode!,
+                    icon:  Text("fotoğraf eklenecek"),
+                    firstTitle: item.operationName,
+                    subTitle:item.operationStart.toString(),
                     onTap: () {
                       NavigationService.instance.navigateToPage(
-                          path: NavigationConstants.RANK_TABLE, data: item.id!);
+                          path: NavigationConstants.OPERATION_DETAIL, data: item.docId);
                     },
                   ),
                 ),
@@ -167,19 +162,19 @@ class _HomeViewState extends BaseState<HomeView> {
       child: Observer(
         builder: (context) {
           return Column(
-            children: [
-              for (TournamentModel item in viewModel.outDatedTournaments)
+           children: [
+              for (OperationModel item in viewModel.continuingOpertaions)
                 Container(
                   margin: const EdgeInsets.only(bottom: 15.0),
                   child: GameModeCard(
                     maxHeight: 150,
                     maxWidth: 500,
-                    icon: Image.asset("assets/card_icons/tournament_icon.png"),
-                    firstTitle: item.gameName!,
-                    subTitle: item.gameMode!,
+                    icon: Text("fotoğraf eklenecek"),
+                    firstTitle: item.location,
+                    subTitle:item.operationStart.toString(),
                     onTap: () {
-                      NavigationService.instance.navigateToPage(
-                          path: NavigationConstants.RANK_TABLE, data: item.id!);
+                             NavigationService.instance.navigateToPage(
+                          path: NavigationConstants.OPERATION_DETAIL, data: item.docId);
                     },
                   ),
                 ),

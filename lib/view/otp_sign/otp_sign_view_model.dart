@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:first_three/core/init/authentication/authentication_provider.dart';
-import 'package:first_three/model/player/player_model.dart';
+import 'package:first_three/model/user/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,7 +19,7 @@ abstract class _OtpSignViewModelBase with Store {
 
 
   Auth auth = Auth();
-  late PlayerModel playerModel;
+  late UserModel userModel;
 
   void setContext(BuildContext context) {
     this.context = context;
@@ -27,11 +27,11 @@ abstract class _OtpSignViewModelBase with Store {
 
   Future<void> phoneVerification() async {
     final SharedPreferences prefs = await _prefs;
-      await prefs.setString('currentUserPhone', playerModel.phone??"no user phone data");
+      await prefs.setString('currentUserPhone', userModel.phone);
     await auth.phoneSignIn(
      
         onSms: smsCodeSet,
-        onverificationId: verificationIdSet, playerModel: playerModel);
+        onverificationId: verificationIdSet, userModel: userModel);
   }
 
   @action

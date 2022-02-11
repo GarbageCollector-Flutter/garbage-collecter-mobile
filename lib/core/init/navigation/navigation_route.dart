@@ -1,11 +1,10 @@
 import 'package:first_three/core/components/init/not_found_widget.dart';
 import 'package:first_three/core/constants/navigation/navigation_constants.dart';
-import 'package:first_three/model/player/player_model.dart';
+import 'package:first_three/model/user/user_model.dart';
 import 'package:first_three/view/home/home_view.dart';
 import 'package:first_three/view/login/login_view.dart';
+import 'package:first_three/view/operation_detail/operation_detail_view.dart';
 import 'package:first_three/view/otp_sign/otp_sign_view.dart';
-import 'package:first_three/view/profile/profile_view.dart';
-import 'package:first_three/view/second_page/second_page.dart';
 import 'package:flutter/material.dart';
 
 class NavigationRoute {
@@ -18,17 +17,18 @@ class NavigationRoute {
     switch (args.name) {
       case NavigationConstants.HOME_VIEW:
         return normalNavigate(HomeView(), NavigationConstants.HOME_VIEW);
-      case NavigationConstants.SECOND_PAGE:
-        return normalNavigate(SecondPage(), NavigationConstants.SECOND_PAGE);
       case NavigationConstants.OTP_SIGN:
-        final arguments = args.arguments as PlayerModel;
+        final arguments = args.arguments as UserModel;
         return normalNavigate(const OtpSignView(), NavigationConstants.OTP_SIGN,
             args: arguments);
       case NavigationConstants.LOGIN_PAGE:
         return normalNavigate(
             const LoginView(), NavigationConstants.LOGIN_PAGE);
-      case NavigationConstants.PROFILE:
-        return normalNavigate(ProfileView(), NavigationConstants.PROFILE);
+   
+       case NavigationConstants.OPERATION_DETAIL:
+        final arguments = args.arguments as String;
+        return normalNavigate( OperationDetailView(), NavigationConstants.OPERATION_DETAIL,
+            args: arguments);
 
       default:
         return MaterialPageRoute(
