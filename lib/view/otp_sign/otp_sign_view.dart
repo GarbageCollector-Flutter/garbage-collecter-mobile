@@ -1,12 +1,9 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:first_three/core/base/state/base_state.dart';
 import 'package:first_three/core/base/view/base_view.dart';
 import 'package:first_three/core/components/text/locale_text.dart';
 import 'package:first_three/core/components/widgets/buttons/sign_button.dart';
-import 'package:first_three/core/constants/navigation/navigation_constants.dart';
 import 'package:first_three/core/init/lang/locale_keys.g.dart';
-import 'package:first_three/core/init/navigation/navigation_service.dart';
 import 'package:first_three/model/user/user_model.dart';
 import 'package:first_three/view/otp_sign/otp_sign_view_model.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +11,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
 class OtpSignView extends StatefulWidget {
- const OtpSignView({
+  const OtpSignView({
     Key? key,
   }) : super(key: key);
 
@@ -43,9 +40,7 @@ class _OtpSignViewState extends BaseState<OtpSignView> {
           viewModel.setContext(this.context);
           viewModel.userModel =
               ModalRoute.of(context)!.settings.arguments as UserModel;
-          viewModel
-              .phoneVerification()
-              .then((value) => {print("doldurma ekranı çıkacak")});
+          viewModel.phoneVerification();
         },
         onPageBuilder: (context, value) => scaffold);
   }
@@ -82,7 +77,7 @@ class _OtpSignViewState extends BaseState<OtpSignView> {
             left: 10,
             right: 10,
             child: AnimatedContainer(
-            //  padding: EdgeInsets.all(10),
+              //  padding: EdgeInsets.all(10),
               height: viewModel.smsCode != null ? 120 : 0,
               width: double.infinity,
               duration: const Duration(milliseconds: 200),
@@ -96,20 +91,18 @@ class _OtpSignViewState extends BaseState<OtpSignView> {
                 padding: const EdgeInsets.all(15.0),
                 child: Column(
                   children: [
-                     Text(
+                    Text(
                         "sms kodunuzun otomatik doldurulmasını istiyor musunuz? SMS kodunuz: ${viewModel.smsCode}"),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ElevatedButton(
-                          
                             onPressed: () {
                               viewModel.smsCode = null;
                             },
                             child: const Text("red")),
                         ElevatedButton(
                             onPressed: () {
-                              
                               viewModel.completeAutoLogin();
                             },
                             child: const Text("onay")),
@@ -133,8 +126,7 @@ class _OtpSignViewState extends BaseState<OtpSignView> {
                 child: SignButton(
                   text: "Giriş",
                   onTap: () {
-                  
-                  viewModel.manuelLogin(pinPutController.text);
+                    viewModel.manuelLogin(pinPutController.text);
                   },
                 ))
           ],
@@ -179,7 +171,7 @@ class _OtpSignViewState extends BaseState<OtpSignView> {
           eachFieldWidth: 40.0,
           eachFieldHeight: 55.0,
           // focusNode: _pinPutFocusNode,
-          controller:pinPutController,
+          controller: pinPutController,
           submittedFieldDecoration: pinPutDecoration,
           selectedFieldDecoration: pinPutDecoration,
           followingFieldDecoration: pinPutDecoration,
@@ -205,6 +197,4 @@ class _OtpSignViewState extends BaseState<OtpSignView> {
         style: TextStyle(
             fontWeight: FontWeight.normal, fontSize: 20, color: Colors.black87),
       );
-
-
 }
