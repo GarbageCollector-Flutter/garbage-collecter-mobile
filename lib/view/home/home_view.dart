@@ -12,6 +12,7 @@ import 'package:first_three/view/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeView extends StatefulWidget {
   HomeView({Key? key}) : super(key: key);
@@ -23,10 +24,19 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends BaseState<HomeView> {
   bool _isMenuOpen = false;
   late HomeViewModel viewModel;
-  void onTapProfile() {
+          final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  void onTapProfile() async{
+      final SharedPreferences prefs = await _prefs;
+    String? userId=  prefs.getString('currentUserPhone');
+    if(userId!=null) {
+      NavigationService.instance
+        .navigateToPage(path: NavigationConstants.PROFILE,data: userId);
+    }
+
+  }
+    void signout() {
     FirebaseAuth.instance.signOut();
-    // NavigationService.instance
-    //     .navigateToPage(path: NavigationConstants.PROFILE);
   }
 
   @override
@@ -71,7 +81,7 @@ class _HomeViewState extends BaseState<HomeView> {
                     buttons: {
                       'hakkımızda': onTapProfile,
                       "profil": onTapProfile,
-                      "ayarlar": onTapProfile,
+                      "çıkış": signout,
                     },
                     title: Text("Akış",
                         style: TextStyle(
@@ -93,11 +103,11 @@ class _HomeViewState extends BaseState<HomeView> {
               children: [
                 SizedBox(
                   width: dynamicWidth(0.6),
-                  height: 100,
+                  height: 70,
                   child: EmptySurface(
                     child: TabBar(
                       indicatorPadding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                       labelColor: Colors.black,
                       indicatorColor: Colors.black,
                       labelStyle: GoogleFonts.ibmPlexSans(
@@ -112,7 +122,6 @@ class _HomeViewState extends BaseState<HomeView> {
                       ],
                       onTap: (val) {
                         setState(() {
-                          print("----------------" + val.toString());
                         });
                       },
                     ),

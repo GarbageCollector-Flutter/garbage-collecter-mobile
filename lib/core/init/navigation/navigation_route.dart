@@ -5,6 +5,7 @@ import 'package:first_three/view/home/home_view.dart';
 import 'package:first_three/view/login/login_view.dart';
 import 'package:first_three/view/operation_detail/operation_detail_view.dart';
 import 'package:first_three/view/otp_sign/otp_sign_view.dart';
+import 'package:first_three/view/profile/profile_view.dart';
 import 'package:flutter/material.dart';
 
 class NavigationRoute {
@@ -24,10 +25,15 @@ class NavigationRoute {
       case NavigationConstants.LOGIN_PAGE:
         return normalNavigate(
             const LoginView(), NavigationConstants.LOGIN_PAGE);
-   
-       case NavigationConstants.OPERATION_DETAIL:
+
+      case NavigationConstants.OPERATION_DETAIL:
         final arguments = args.arguments as String;
-        return normalNavigate( OperationDetailView(), NavigationConstants.OPERATION_DETAIL,
+        return normalNavigate(
+            OperationDetailView(), NavigationConstants.OPERATION_DETAIL,
+            args: arguments);
+      case NavigationConstants.PROFILE:
+        final arguments = args.arguments as String;
+        return normalNavigate(ProfileView(), NavigationConstants.PROFILE,
             args: arguments);
 
       default:
