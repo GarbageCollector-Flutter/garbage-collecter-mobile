@@ -140,39 +140,9 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
                  margin: EdgeInsets.all(5),
                  height: 200,
                  width: 200,
-                 color: Colors.blue,
-               ),  Container(
-                 margin: EdgeInsets.all(5),
-                 height: 200,
-                 width: 200,
-                 color: Colors.red,
-               ),
-            
-              Container(
-                 margin: EdgeInsets.all(5),
-                 height: 200,
-                 width: 200,
-                 color: Colors.red,
-               ),
-            
-              Container(
-                 margin: EdgeInsets.all(5),
-                 height: 200,
-                 width: 200,
-                 color: Colors.red,
-               ),
-            
-              Container(
-                 margin: EdgeInsets.all(5),
-                 height: 200,
-                 width: 200,
-                 color: Colors.red,
-               ),
-            
-            
-
-
-
+                 child: Image.network(imgUrl),
+              
+               ), 
         ],)
       ),]
       ));
@@ -185,43 +155,15 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
           scrollDirection: Axis.horizontal,
           child:
               Row(children: [
-               Container(
-                 margin: EdgeInsets.all(5),
-                 height: 200,
-                 width: 200,
-                 color: Colors.red,
-               ),  Container(
-                 margin: EdgeInsets.all(5),
-                 height: 200,
-                 width: 200,
-                 color: Colors.red,
-               ),
-            
-              Container(
-                 margin: EdgeInsets.all(5),
-                 height: 200,
-                 width: 200,
-                 color: Colors.red,
-               ),
-            
-              Container(
-                 margin: EdgeInsets.all(5),
-                 height: 200,
-                 width: 200,
-                 color: Colors.red,
-               ),
-            
-              Container(
-                 margin: EdgeInsets.all(5),
-                 height: 200,
-                 width: 200,
-                 color: Colors.red,
-               ),
-            
-            
 
-
-
+              for(String imgUrl in viewModel.operationModel!.beforePhoto)
+                Container(
+                 margin: EdgeInsets.all(5),
+                 height: 200,
+                 width: 200,
+                 child: Image.network(imgUrl),
+               ), 
+         
         ],)
       ),]
       ));
