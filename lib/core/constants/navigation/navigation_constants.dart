@@ -5,8 +5,9 @@ class NavigationConstants {
   static const DEFAULT = '/';
   static const OTP_SIGN = '/otp';
   static const LOGIN_PAGE = '/login';
-  static const PROFILE = '/profil';
+  static const PROFILE = '/profile';
   static const OPERATION_DETAIL = "/opreation-detail";
+
 
 
 
