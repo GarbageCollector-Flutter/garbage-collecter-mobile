@@ -85,14 +85,14 @@ class _ProfileViewState extends BaseState<ProfileView> {
                 child: Image.asset(ApplicationConstants.USER_PROFILE_PATH,
                     color: themeData.primaryColorLight)),
             Text(
-              "onur can",
+              viewModel.userModel != null?viewModel.userModel!.name:"isim soyisim",
               style: TextStyle(fontSize: 22, color: Colors.black),
             ),
             SizedBox(
               height: 20,
             ),
             Text(
-              "+905396420208",
+               viewModel.userModel != null?viewModel.userModel!.phone:"telefon numarası",
               style: TextStyle(fontSize: 22, color: Colors.black),
             ),
             

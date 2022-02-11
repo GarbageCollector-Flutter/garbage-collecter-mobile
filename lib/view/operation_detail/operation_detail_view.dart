@@ -135,11 +135,12 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
           scrollDirection: Axis.horizontal,
           child:
               Row(children: [
+                for(String imgUrl in viewModel.operationModel!.afterPhoto)
                Container(
                  margin: EdgeInsets.all(5),
                  height: 200,
                  width: 200,
-                 color: Colors.red,
+                 color: Colors.blue,
                ),  Container(
                  margin: EdgeInsets.all(5),
                  height: 200,

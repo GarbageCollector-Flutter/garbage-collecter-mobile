@@ -15,38 +15,48 @@ class ProfileViewModel = _ProfileViewModelBase with _$ProfileViewModel;
 abstract class _ProfileViewModelBase with Store {
   late BuildContext context;
   late String userId;
-  UserModel? userModel;
+
   UserModelProvider userModelProvider = UserModelProvider();
   OperationModelProvider operationModelProvider = OperationModelProvider();
-  @observable 
-var operations = ObservableList<OperationModel>();
+
+  @observable
+  UserModel? userModel;
+  @observable
+  var operations = ObservableList<OperationModel>();
+
   void setContext(BuildContext context) async {
     this.context = context;
     setUserProviderReference();
   }
+
   void setUserProviderReference() {
     CollectionReference<Map<String, dynamic>> collectionReference =
         FirebaseFirestore.instance.collection(FirebaseConstants.USERS_PATH);
     userModelProvider.setCollectionReference(collectionReference);
   }
-    void setOperationProviderReference() {
+
+  void setOperationProviderReference() {
     CollectionReference<Map<String, dynamic>> collectionReference =
-        FirebaseFirestore.instance.collection(FirebaseConstants.OPERATIONS_PATH);
+        FirebaseFirestore.instance
+            .collection(FirebaseConstants.OPERATIONS_PATH);
     operationModelProvider.setCollectionReference(collectionReference);
   }
-  Future<void> getUser()async{
-  userModel= await  userModelProvider.getItem(userId);
-  if(userModel!=null){
-    getUserOperations();
-  }
-  }
-  Future<void>getUserOperations()async{
-    for(String operationId in userModel!.joinedOperations){
-        OperationModel? operationModel = await operationModelProvider.getItem(operationId);
-        if(operationModel!=null){
-          operations.add(operationModel);
-        }
+
+  Future<void> getUser() async {
+    userModel = await userModelProvider.getItem(userId);
+    if (userModel != null) {
+      getUserOperations();
     }
   }
 
+  Future<void> getUserOperations() async {
+    for (String operationId in userModel!.joinedOperations) {
+      print("++++++++++++++"+operationId);
+      OperationModel? operationModel =
+          await operationModelProvider.getItem(operationId);
+      if (operationModel != null) {
+        operations.add(operationModel);
+      }
+    }
+  }
 }
