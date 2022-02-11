@@ -7,6 +7,7 @@ import 'package:first_three/core/components/widgets/dialogs/default_dialog.dart'
 import 'package:first_three/core/components/widgets/input_widgets/login_inputters.dart';
 import 'package:first_three/core/components/widgets/buttons/sign_button.dart';
 import 'package:first_three/core/components/widgets/others/animated_label.dart';
+import 'package:first_three/core/constants/app/app_constants.dart';
 import 'package:first_three/core/init/lang/locale_keys.g.dart';
 import 'package:first_three/model/user/user_model.dart';
 import 'package:first_three/view/login/login_view_model.dart';
@@ -108,7 +109,9 @@ class _LoginViewState extends BaseState<LoginView> {
             right: dynamicWidth(0.1),
             top: dynamicHeight(0.1)),
         child: Container(
-          color: Colors.red,
+          width: dynamicWidth(1),
+          child: SafeArea(child:
+           Image.asset(ApplicationConstants.APP_ICON_PATH, color: ThemeData().primaryColor)),
         ),
       );
 
@@ -159,10 +162,12 @@ class _LoginViewState extends BaseState<LoginView> {
   Widget get animatedLogo => AnimatedContainer(
         width: isKeyboardHide ? 0 : 150,
         height: isKeyboardHide ? 0 : 70,
-        alignment: Alignment.center,
+        alignment: Alignment.topCenter,
         curve: Curves.fastOutSlowIn,
         duration: const Duration(seconds: 1),
-        color: Colors.red,
+        //color: Colors.red,
+           child: SafeArea(child:
+           Image.asset(ApplicationConstants.APP_ICON_PATH, color: Colors.white)),
       );
 
   Widget get formFields => Expanded(
