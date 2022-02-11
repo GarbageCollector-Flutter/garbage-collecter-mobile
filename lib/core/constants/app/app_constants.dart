@@ -1,7 +1,9 @@
+// ignore_for_file: constant_identifier_names
+
 class ApplicationConstants{
-// ignore: constant_identifier_names
+
 static const LANG_ASSET_PATH = "assets/lang";
 
-
+static const APP_ICON_PATH = "assets/uicons/app_icon.png";
 
 }
