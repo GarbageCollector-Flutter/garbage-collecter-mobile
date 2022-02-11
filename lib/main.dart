@@ -8,6 +8,7 @@ import 'package:first_three/view/home/home_view.dart';
 import 'package:first_three/view/login/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:splash_screen_view/SplashScreenView.dart';
 
 import 'core/init/navigation/navigation_route.dart';
 import 'core/init/navigation/navigation_service.dart';
@@ -29,7 +30,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  // This widget is the root of your application....
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -41,19 +42,29 @@ class MyApp extends StatelessWidget {
       navigatorKey: NavigationService.instance.navigatorKey,
       // navigatorObservers: [AnalytcisManager.instance.observer],
       theme: context.watch<ThemeNotifier>().currentTheme,
-      home : StreamBuilder(
-                    stream: FirebaseAuth.instance.authStateChanges(),
-                    builder: (ctx, userSnapshot) {
-                      if (userSnapshot.connectionState ==
-                          ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
-                      }
-                      if (userSnapshot.hasData) {
-                        return HomeView();
-                      } else {
-                        return const LoginView();
-                      }
-                    }),
+      home : SplashScreenView(
+      navigateRoute: _buildStreamBuilder(),
+      duration: 100,
+      imageSize: 100,
+      imageSrc: ApplicationConstants.APP_ICON_PATH,
+      backgroundColor: const Color(0xff6b6bff),
+    ),
     );
+  }
+
+  StreamBuilder<User?> _buildStreamBuilder() {
+    return StreamBuilder(
+                  stream: FirebaseAuth.instance.authStateChanges(),
+                  builder: (ctx, userSnapshot) {
+                    if (userSnapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    }
+                    if (userSnapshot.hasData) {
+                      return HomeView();
+                    } else {
+                      return const LoginView();
+                    }
+                  });
   }
 }
