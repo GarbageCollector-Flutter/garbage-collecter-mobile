@@ -48,6 +48,7 @@ dependencies:
   shared_preferences: ^2.0.12
   splash_screen_view:
   flutter_launcher_icons: ^0.9.2
+  flutter_datetime_picker: ^1.5.1
 
 
 flutter_icons:

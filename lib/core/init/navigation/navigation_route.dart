@@ -4,6 +4,7 @@ import 'package:first_three/model/user/user_model.dart';
 import 'package:first_three/view/home/home_view.dart';
 import 'package:first_three/view/login/login_view.dart';
 import 'package:first_three/view/operation_detail/operation_detail_view.dart';
+import 'package:first_three/view/operation_form/operation_form_view.dart';
 import 'package:first_three/view/otp_sign/otp_sign_view.dart';
 import 'package:first_three/view/profile/profile_view.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,10 @@ class NavigationRoute {
       case NavigationConstants.PROFILE:
         final arguments = args.arguments as String;
         return normalNavigate(ProfileView(), NavigationConstants.PROFILE,
+            args: arguments);
+      case NavigationConstants.OPERATION_FORM:
+        final arguments = args.arguments as String;
+        return normalNavigate(OperationFormView(), NavigationConstants.OPERATION_FORM,
             args: arguments);
 
       default:

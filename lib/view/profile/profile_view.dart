@@ -51,7 +51,7 @@ class _ProfileViewState extends BaseState<ProfileView> {
               left: 0,
               right: 0,
               top: 20,
-              child: Padding(padding: EdgeInsets.all(8.0), child: myAppBar)),
+              child: Padding(padding: const EdgeInsets.all(8.0), child: myAppBar)),
         ],
       ));
 
@@ -73,7 +73,8 @@ class _ProfileViewState extends BaseState<ProfileView> {
   Widget get body =>Observer(builder: (context){
     return Column(children: [
     userIdentity,
-    operations
+    operations,
+    createNewOperation
     ],);
   });
 
@@ -86,14 +87,14 @@ class _ProfileViewState extends BaseState<ProfileView> {
                     color: themeData.primaryColorLight)),
             Text(
               viewModel.userModel != null?viewModel.userModel!.name:"isim soyisim",
-              style: TextStyle(fontSize: 22, color: Colors.black),
+              style: const TextStyle(fontSize: 22, color: Colors.black),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Text(
                viewModel.userModel != null?viewModel.userModel!.phone:"telefon numarası",
-              style: TextStyle(fontSize: 22, color: Colors.black),
+              style: const TextStyle(fontSize: 22, color: Colors.black),
             ),
             
           ],
@@ -101,7 +102,7 @@ class _ProfileViewState extends BaseState<ProfileView> {
       );
 
         Widget get operations => Padding(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       child: Observer(
         builder: (context) {
           return Column(
@@ -112,7 +113,7 @@ class _ProfileViewState extends BaseState<ProfileView> {
                   child: GameModeCard(
                     maxHeight: 150,
                     maxWidth: 500,
-                    icon: Text("fotoğraf eklenecek"),
+                    icon: const Text("fotoğraf eklenecek"),
                     firstTitle: item.location,
                     subTitle:item.operationStart.toString(),
                     onTap: () {
@@ -124,5 +125,21 @@ class _ProfileViewState extends BaseState<ProfileView> {
             ],
           );
         },
+      ));
+        Widget get createNewOperation => ElevatedButton(
+      onPressed: () {
+        NavigationService.instance.navigateToPage(
+          path : NavigationConstants.OPERATION_FORM,
+          data: viewModel.userId
+        );
+      },
+      child: Container(
+        width: dynamicWidth(0.5),
+        alignment: Alignment.center,
+        height: 70,
+        child: Text(
+          "Etkinlik Oluştur",
+          style: TextStyle(fontSize: 25),
+        ),
       ));
 }
