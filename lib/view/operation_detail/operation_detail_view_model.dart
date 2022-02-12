@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:first_three/core/constants/firebase/firebase_constatns.dart';
+import 'package:first_three/core/services/storage/storage_service.dart';
 import 'package:first_three/model/officer/officer_model.dart';
 import 'package:first_three/model/officer/officer_model_provider.dart';
 import 'package:first_three/model/operations/operation_model.dart';
@@ -19,21 +22,20 @@ abstract class _OperationDetailViewModelBase with Store {
   BuildContext? context;
   late String operationPath;
 
-   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   @observable
   OperationModel? operationModel;
   @observable
   UserModel? organizator;
 
-@observable
-var officers = ObservableList<UserOfficer>();
+  @observable
+  var officers = ObservableList<UserOfficer>();
 
-@observable
-var garbage_collecters = ObservableList<UserModel>();
+  @observable
+  var garbage_collecters = ObservableList<UserModel>();
 
-
-
+  UserModel? currentUserModel;
 
   OperationModelProvider operationModelProvider = OperationModelProvider();
   UserModelProvider userModelProvider = UserModelProvider();
@@ -66,13 +68,13 @@ var garbage_collecters = ObservableList<UserModel>();
   Future<void> getOperation() async {
     operationModel = await operationModelProvider.getItem(operationPath);
     organizator = await userModelProvider.getItem(operationModel!.organizator);
-   await getCollecters();
-   
-   await getOfficers();
+    await getCollecters();
+
+    await getOfficers();
   }
 
   Future<void> getCollecters() async {
-     garbage_collecters.clear();
+    garbage_collecters.clear();
     for (dynamic item in operationModel!.garbageCollecters) {
       UserModel? collecter = await userModelProvider.getItem(item);
       if (collecter != null) {
@@ -91,22 +93,59 @@ var garbage_collecters = ObservableList<UserModel>();
       if (userModel != null) {
         UserOfficer userOfficer =
             UserOfficer(officerModel: officerModel, usermodel: userModel);
-        officers.add(userOfficer);      }
+        officers.add(userOfficer);
+      }
     }
     return;
   }
-  void addPhoto(){
 
-  }
- Future <void> addCollecter()async{
-     final SharedPreferences prefs = await _prefs;
-    String? userId=  prefs.getString('currentUserPhone');
-    if(userId!=null){
-      if(operationModel!=null){
-    operationModel!.garbageCollecters.add(userId);
-   await  operationModelProvider.updateItem(operationModel!.docId, operationModel!);
+  Future<void> addPhoto({required File imgFile, required bool isBefore}) async {
+    if (operationModel != null) {
+      final SharedPreferences prefs = await _prefs;
+      String? userId = prefs.getString('currentUserPhone');
+      if (userId != null) {
+        var imgUrl = await StrageService().userimgUpload(imgFile, userId);
+        print("------------------" + imgUrl);
+
+        if (operationModel != null) {
+          if (isBefore == true) {
+            operationModel!.beforePhoto.add(imgUrl);
+            await operationModelProvider.updateItem(
+                operationModel!.docId, operationModel!);
+          } else {
+            operationModel!.afterPhoto.add(imgUrl);
+            await operationModelProvider.updateItem(
+                operationModel!.docId, operationModel!);
+          }
+        }
       }
+    }
+  }
 
+  Future<void> addCollecter() async {
+    final SharedPreferences prefs = await _prefs;
+    String? userId = prefs.getString('currentUserPhone');
+    if (userId != null) {
+      if (operationModel != null) {
+        operationModel!.garbageCollecters.add(userId);
+        await operationModelProvider.updateItem(
+            operationModel!.docId, operationModel!);
+        if (currentUserModel != null) {
+          currentUserModel!.joinedOperations.add(operationPath);
+            await userModelProvider.updateItem(
+            currentUserModel!.phone, currentUserModel!);
+        }
+
+      
+      }
+    }
+  }
+
+  Future<void> getCurrentUser() async {
+    final SharedPreferences prefs = await _prefs;
+    String? userId = prefs.getString('currentUserPhone');
+    if (userId != null) {
+      currentUserModel = await userModelProvider.getItem(userId);
     }
   }
 }
