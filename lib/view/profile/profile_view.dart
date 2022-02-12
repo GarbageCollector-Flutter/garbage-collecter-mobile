@@ -5,6 +5,7 @@ import 'package:first_three/core/components/widgets/cards/game_mode_card.dart';
 import 'package:first_three/core/components/widgets/others/my_appbar.dart';
 import 'package:first_three/core/constants/app/app_constants.dart';
 import 'package:first_three/core/constants/navigation/navigation_constants.dart';
+import 'package:first_three/core/extenstions/int_time_format_extension.dart';
 import 'package:first_three/core/init/navigation/navigation_service.dart';
 import 'package:first_three/model/operations/operation_model.dart';
 import 'package:first_three/view/profile/profile_view_model.dart';
@@ -72,8 +73,13 @@ class _ProfileViewState extends BaseState<ProfileView> {
         ),
       );
   Widget get body => Observer(builder: (context) {
-        return Column(
-          children: [userIdentity, operations, createNewOperation],
+        return SizedBox(
+          height: dynamicHeight(1)-120,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [userIdentity, operations, createNewOperation],
+            ),
+          ),
         );
       });
 
@@ -108,7 +114,8 @@ class _ProfileViewState extends BaseState<ProfileView> {
       child: Observer(
         
         builder: (context) {
-          return Column(
+          if(viewModel.operations.isNotEmpty){
+     return Column(
             children: [
               for (OperationModel item in viewModel.operations)
                 Container(
@@ -121,12 +128,14 @@ class _ProfileViewState extends BaseState<ProfileView> {
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
                           child: Image.network(
-                            item.beforePhoto[0],
-                            fit: BoxFit.fill,
-                          )),
+                        item.beforePhoto.isEmpty ?  
+                        "https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/recycle-256.png" : 
+                        item.beforePhoto[0]
+                      ,
+                         fit: BoxFit.fill,)),
                     ),
                     firstTitle: item.location,
-                    subTitle: item.operationStart.toString(),
+                    subTitle: item.operationStart.toFormattedTime,
                     onTap: () {
                       NavigationService.instance.navigateToPage(
                           path: NavigationConstants.OPERATION_DETAIL,
@@ -136,6 +145,10 @@ class _ProfileViewState extends BaseState<ProfileView> {
                 ),
             ],
           );
+          }else{
+            return SizedBox();
+          }
+     
         },
       ));
   Widget get createNewOperation => ElevatedButton(

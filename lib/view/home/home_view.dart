@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:first_three/core/extenstions/int_time_format_extension.dart';
 
 class HomeView extends StatefulWidget {
   HomeView({Key? key}) : super(key: key);
@@ -26,18 +27,18 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends BaseState<HomeView> {
   bool _isMenuOpen = false;
   late HomeViewModel viewModel;
-          final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
-  void onTapProfile() async{
-      final SharedPreferences prefs = await _prefs;
-    String? userId=  prefs.getString('currentUserPhone');
-    if(userId!=null) {
+  void onTapProfile() async {
+    final SharedPreferences prefs = await _prefs;
+    String? userId = prefs.getString('currentUserPhone');
+    if (userId != null) {
       NavigationService.instance
-        .navigateToPage(path: NavigationConstants.PROFILE,data: userId);
+          .navigateToPage(path: NavigationConstants.PROFILE, data: userId);
     }
-
   }
-    void signout() {
+
+  void signout() {
     FirebaseAuth.instance.signOut();
   }
 
@@ -48,7 +49,11 @@ class _HomeViewState extends BaseState<HomeView> {
         onModelReady: (model) async {
           viewModel = model as HomeViewModel;
           viewModel.setContext(this.context);
-         await viewModel.getAllOperations();
+          await viewModel.getAllOperations().then((value) {
+            setState(() {
+              
+            });
+          });
         },
         onPageBuilder: (context, value) => scaffold);
   }
@@ -60,6 +65,7 @@ class _HomeViewState extends BaseState<HomeView> {
               top: 110,
               left: 0,
               right: 0,
+          
               child: Padding(
                 padding: const EdgeInsets.all(2.0),
                 child: tabs,
@@ -100,43 +106,52 @@ class _HomeViewState extends BaseState<HomeView> {
         height: dynamicHeight(1) - 100,
         child: DefaultTabController(
           length: 2,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(
-                  width: dynamicWidth(0.6),
-                  height: 70,
-                  child: EmptySurface(
-                    child: TabBar(
-                      indicatorPadding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                      labelColor: Colors.black,
-                      indicatorColor: Colors.black,
-                      labelStyle: GoogleFonts.ibmPlexSans(
-                          fontSize: 17, fontWeight: FontWeight.w500),
-                      unselectedLabelStyle: GoogleFonts.ibmPlexSans(
-                          fontSize: 17, fontWeight: FontWeight.w500),
-                      tabs: const [
-                        Tab(
-                          text: "aktif",
-                        ),
-                        Tab(text: "biten"),
-                      ],
-                      onTap: (val) {
-                        setState(() {
-                        });
-                      },
+          child: RefreshIndicator(
+            onRefresh: () async =>
+                await viewModel.getAllOperations().then((value) {
+                  setState(() {
+                    
+                  });
+                }),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: dynamicWidth(0.6),
+                    height: 70,
+                    child: EmptySurface(
+                      child: TabBar(
+                        indicatorPadding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                        labelColor: Colors.black,
+                        indicatorColor: Colors.black,
+                        labelStyle: GoogleFonts.ibmPlexSans(
+                            fontSize: 17, fontWeight: FontWeight.w500),
+                        unselectedLabelStyle: GoogleFonts.ibmPlexSans(
+                            fontSize: 17, fontWeight: FontWeight.w500),
+                        tabs: const [
+                          Tab(
+                            text: "aktif",
+                          ),
+                          Tab(text: "biten"),
+                        ],
+                        onTap: (val) {
+                          setState(() {});
+                        },
+                      ),
                     ),
                   ),
-                ),
-                tabFields
-              ],
+                  tabFields
+                ],
+              ),
             ),
           ),
         ),
       );
   Widget get tabFields => Container(
-        height: 1000, //itemSize * 180,
+        height: viewModel.continuingOpertaions.length < viewModel.outDatedOpertaions.length
+            ? viewModel.outDatedOpertaions.length * 200
+            : viewModel.continuingOpertaions.length * 200,
         width: double.infinity,
         child: TabBarView(
           children: [continuing, outDated],
@@ -147,35 +162,32 @@ class _HomeViewState extends BaseState<HomeView> {
       padding: EdgeInsets.all(8),
       child: Observer(
         builder: (context) {
-
-        
           return Column(
             children: [
-              for (OperationModel item in viewModel.continuingOpertaions)
-             
+              for (OperationModel item in viewModel.outDatedOpertaions)
                 Container(
                   margin: const EdgeInsets.only(bottom: 15.0),
                   child: GameModeCard(
                     maxHeight: 150,
                     maxWidth: 500,
-                      icon: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ClipRRect(
-                       borderRadius: BorderRadius.circular(8.0),
-                       
-                      child:  Image.network(
-                        item.beforePhoto.isEmpty ?  
-                        "https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/recycle-256.png" : 
-                        item.beforePhoto[0]
-                      ,
-                         fit: BoxFit.fill,)),
-                  ),
-                //    icon:  Text("fotoğraf eklenecek"),
+                    icon: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image.network(
+                            item.beforePhoto.isEmpty
+                                ? "https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/recycle-256.png"
+                                : item.beforePhoto[0],
+                            fit: BoxFit.fill,
+                          )),
+                    ),
+                    //    icon:  Text("fotoğraf eklenecek"),
                     firstTitle: item.operationName,
-                    subTitle:item.operationStart.toString(),
+                    subTitle: item.operationStart.toFormattedTime,
                     onTap: () {
                       NavigationService.instance.navigateToPage(
-                          path: NavigationConstants.OPERATION_DETAIL, data: item.docId);
+                          path: NavigationConstants.OPERATION_DETAIL,
+                          data: item.docId);
                     },
                   ),
                 ),
@@ -188,39 +200,31 @@ class _HomeViewState extends BaseState<HomeView> {
       child: Observer(
         builder: (context) {
           return Column(
-           children: [
+            children: [
               for (OperationModel item in viewModel.continuingOpertaions)
                 Container(
                   margin: const EdgeInsets.only(bottom: 15.0),
                   child: GameModeCard(
                     maxHeight: 150,
                     maxWidth: 500,
-
-                 
-                  icon: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ClipRRect(
-                       borderRadius: BorderRadius.circular(8.0),
-                      
-                     
-                      child: SafeArea(
-                        
-                        child: Image.network(
-                              item.beforePhoto.isEmpty ?  
-                          "https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/recycle-256.png" : 
-                           item.beforePhoto[0]
-                        ,
-                          fit: BoxFit.fill),
-                      )),
-                        
-                  ),
-               
-
+                    icon: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: SafeArea(
+                            child: Image.network(
+                                item.beforePhoto.isEmpty
+                                    ? "https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/recycle-256.png"
+                                    : item.beforePhoto[0],
+                                fit: BoxFit.fill),
+                          )),
+                    ),
                     firstTitle: item.location,
-                    subTitle:item.operationStart.toString(),
+                    subTitle: item.operationStart.toFormattedTime,
                     onTap: () {
-                             NavigationService.instance.navigateToPage(
-                          path: NavigationConstants.OPERATION_DETAIL, data: item.docId);
+                      NavigationService.instance.navigateToPage(
+                          path: NavigationConstants.OPERATION_DETAIL,
+                          data: item.docId);
                     },
                   ),
                 ),

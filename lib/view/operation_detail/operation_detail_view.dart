@@ -296,20 +296,8 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
                   "toplayıcılar",
                   style: TextStyle(fontSize: 25),
                 ),
-                GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () async {
-                    await viewModel.addCollecter();
-                    viewModel.getOperation();
-                    rank = 0;
-                  },
-                  child: Center(
-                    child: Icon(
-                      Icons.add,
-                      size: 27,
-                    ),
-                  ),
-                )
+                addOrRemoveCollecter()
+               
               ],
             ),
           ),
@@ -434,7 +422,9 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
   }
 
   Widget get beResponsibleButton => ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+
+      },
       child: Container(
         width: dynamicWidth(0.5),
         alignment: Alignment.center,
@@ -444,4 +434,44 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
           style: TextStyle(fontSize: 25),
         ),
       ));
+  Widget  addOrRemoveCollecter(){
+    if(viewModel.operationModel!=null&&viewModel.currentUserModel!=null){
+ if( viewModel.operationModel!.garbageCollecters.contains(viewModel.currentUserModel!.phone)){
+   return GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () async {
+                    await viewModel.addCollecter();
+                    viewModel.getOperation();
+                    rank = 0;
+                  },
+                  child: Center(
+                    child: Icon(
+                      Icons.remove,
+                      size: 27,
+                    ),
+                  ),
+                );
+
+    }else{
+return  GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () async {
+                    await viewModel.addCollecter();
+                    viewModel.getOperation();
+                    rank = 0;
+                  },
+                  child: Center(
+                    child: Icon(
+                      Icons.add,
+                      size: 27,
+                    ),
+                  ),
+                );
+    }
+    }else{
+      print("---------------------------nulll bbunlar");
+      return Container();
+    }
+   
+  }
 }
