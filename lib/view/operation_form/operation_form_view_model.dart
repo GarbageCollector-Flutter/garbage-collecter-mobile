@@ -27,6 +27,7 @@ abstract class _OperationFormViewModelBase with Store {
   }
   
   bool validateForm(){
+    // ignore: unrelated_type_equality_checks
     if(nameController.text!=""&&locationController!=""&&startTime.isAfter(DateTime.now())){
       return true;
     }else{

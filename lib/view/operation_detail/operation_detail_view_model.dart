@@ -33,6 +33,7 @@ abstract class _OperationDetailViewModelBase with Store {
   var officers = ObservableList<UserOfficer>();
 
   @observable
+  // ignore: non_constant_identifier_names
   var garbage_collecters = ObservableList<UserModel>();
 
   UserModel? currentUserModel;
@@ -105,6 +106,7 @@ abstract class _OperationDetailViewModelBase with Store {
       String? userId = prefs.getString('currentUserPhone');
       if (userId != null) {
         var imgUrl = await StrageService().userimgUpload(imgFile, userId);
+        // ignore: avoid_print
         print("------------------" + imgUrl);
 
         if (operationModel != null) {

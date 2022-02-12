@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:first_three/core/base/state/base_state.dart';
-import 'package:first_three/core/components/widgets/cards/empty_surface.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// ignore: must_be_immutable
 class GameOver extends StatefulWidget {
   int score;
   List<Widget>? buttons;
@@ -35,6 +35,7 @@ class _GameOverState extends BaseState<GameOver> {
         }
       });
     });
+    // ignore: todo
     // TODO: implement initState
     super.initState();
   }
@@ -49,7 +50,7 @@ class _GameOverState extends BaseState<GameOver> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(40),
+      margin: const EdgeInsets.all(40),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: backGroundColor,

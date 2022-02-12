@@ -18,7 +18,7 @@ class NavigationRoute {
   Route<dynamic> generateRoute(RouteSettings args) {
     switch (args.name) {
       case NavigationConstants.HOME_VIEW:
-        return normalNavigate(HomeView(), NavigationConstants.HOME_VIEW);
+        return normalNavigate(const HomeView(), NavigationConstants.HOME_VIEW);
       case NavigationConstants.OTP_SIGN:
         final arguments = args.arguments as UserModel;
         return normalNavigate(const OtpSignView(), NavigationConstants.OTP_SIGN,
@@ -30,15 +30,15 @@ class NavigationRoute {
       case NavigationConstants.OPERATION_DETAIL:
         final arguments = args.arguments as String;
         return normalNavigate(
-            OperationDetailView(), NavigationConstants.OPERATION_DETAIL,
+            const OperationDetailView(), NavigationConstants.OPERATION_DETAIL,
             args: arguments);
       case NavigationConstants.PROFILE:
         final arguments = args.arguments as String;
-        return normalNavigate(ProfileView(), NavigationConstants.PROFILE,
+        return normalNavigate(const ProfileView(), NavigationConstants.PROFILE,
             args: arguments);
       case NavigationConstants.OPERATION_FORM:
         final arguments = args.arguments as String;
-        return normalNavigate(OperationFormView(), NavigationConstants.OPERATION_FORM,
+        return normalNavigate(const OperationFormView(), NavigationConstants.OPERATION_FORM,
             args: arguments);
 
       default:

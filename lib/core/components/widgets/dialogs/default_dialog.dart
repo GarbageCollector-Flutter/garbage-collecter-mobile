@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
 class DefaultDialog extends StatefulWidget {
@@ -30,7 +32,7 @@ void initState(){
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       backgroundColor:Theme.of(context).primaryColorLight,
-      child: Container(
+      child: SizedBox(
       height: widget.height,
       width: widget.width,
      child: Column(

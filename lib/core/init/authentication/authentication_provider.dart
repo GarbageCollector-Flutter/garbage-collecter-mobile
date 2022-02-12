@@ -31,6 +31,7 @@ class Auth {
   _onVerificationFailed(FirebaseAuthException exception) {
    }
 
+  // ignore: unused_element
   _onCodeSent(String verificationId, int? forceResendingToken) {
   }
 

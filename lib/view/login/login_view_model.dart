@@ -39,8 +39,6 @@ abstract class _LoginViewModelBase with Store {
   }
 
   phoneNumberValidator() {
-    //TODO
-    // login veya register request kısmında hata döndür view de try catch ile yakala d,alog ekranı hazır.
   }
 
   Future<void> loginRequest(UserModel userModel) async {

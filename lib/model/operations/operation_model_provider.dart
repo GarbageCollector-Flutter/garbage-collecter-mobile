@@ -12,15 +12,18 @@ class OperationModelProvider implements FirestoreProvider<OperationModel> {
     DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
         await collectionReference.doc(id).get();
     if (documentSnapshot.data() != null)
+      // ignore: curly_braces_in_flow_control_structures
       operationModel = OperationModel.fromJson(documentSnapshot.data()!);
     return operationModel;
   }
 
   @override
   Future<List<OperationModel>> getItemList() async {
+    // ignore: non_constant_identifier_names
     List<OperationModel> OperationList = [];
     QuerySnapshot<Map<String, dynamic>> querySnapshot =
         await collectionReference.get();
+    // ignore: avoid_function_literals_in_foreach_calls
     querySnapshot.docs.forEach((element) {
       OperationList.add(OperationModel.fromJson(element.data()));
     });
@@ -36,6 +39,7 @@ class OperationModelProvider implements FirestoreProvider<OperationModel> {
 
       return true;
     } catch (e) {
+      // ignore: avoid_print
       print(e.toString());
       return false;
     }
@@ -43,18 +47,21 @@ class OperationModelProvider implements FirestoreProvider<OperationModel> {
 
   @override
   Future<bool> isExist(OperationModel model) {
+    // ignore: todo
     // TODO: implement isExist
     throw UnimplementedError();
   }
 
   @override
   Future<void> removeAllItems() {
+    // ignore: todo
     // TODO: implement removeAllItems
     throw UnimplementedError();
   }
 
   @override
   Future<bool> removeItem(int id) {
+    // ignore: todo
     // TODO: implement removeItem
     throw UnimplementedError();
   }

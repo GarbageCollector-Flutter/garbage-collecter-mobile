@@ -19,6 +19,7 @@ class _LoginInputtersState extends State<LoginInputters> {
         controller: widget.controller,
         key: widget.key,
         focusNode: widget.focusNode,
+        // ignore: body_might_complete_normally_nullable
         validator: (value) {
 
         },

@@ -41,6 +41,7 @@ abstract class _HomeViewModelBase with Store {
         outDatedOpertaions.add(operationModel);
       }
     }
+    // ignore: avoid_print
     print("-----------------");
     return;
   

@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_print
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:first_three/core/base/state/base_state.dart';
 import 'package:first_three/core/base/view/base_view.dart';
@@ -19,7 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:first_three/core/extenstions/int_time_format_extension.dart';
 
 class HomeView extends StatefulWidget {
-  HomeView({Key? key}) : super(key: key);
+  const HomeView({Key? key}) : super(key: key);
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -103,7 +102,7 @@ class _HomeViewState extends BaseState<HomeView> {
         ],
       ));
 
-  Widget get tabs => Container(
+  Widget get tabs => SizedBox(
         height: dynamicHeight(1) - 100,
         child: DefaultTabController(
           length: 2,
@@ -123,7 +122,7 @@ class _HomeViewState extends BaseState<HomeView> {
                     child: EmptySurface(
                       child: TabBar(
                         indicatorPadding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                            const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                         labelColor: Colors.black,
                         indicatorColor: Colors.black,
                         labelStyle: GoogleFonts.ibmPlexSans(
@@ -149,7 +148,7 @@ class _HomeViewState extends BaseState<HomeView> {
           ),
         ),
       );
-  Widget get tabFields => Container(
+  Widget get tabFields => SizedBox(
         height: viewModel.continuingOpertaions.length < viewModel.outDatedOpertaions.length
             ? viewModel.outDatedOpertaions.length * 200
             : viewModel.continuingOpertaions.length * 200,
@@ -160,7 +159,7 @@ class _HomeViewState extends BaseState<HomeView> {
       );
 
   Widget get outDated => Padding(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       child: Observer(
         builder: (context) {
           return Column(
@@ -199,7 +198,7 @@ class _HomeViewState extends BaseState<HomeView> {
         },
       ));
   Widget get continuing => Padding(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       child: Observer(
         builder: (context) {
           return Column(

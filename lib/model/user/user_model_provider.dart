@@ -12,12 +12,14 @@ class UserModelProvider implements FirestoreProvider<UserModel> {
     DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
         await collectionReference.doc(id).get();
     if (documentSnapshot.data() != null)
+      // ignore: curly_braces_in_flow_control_structures
       userModel = UserModel.fromJson(documentSnapshot.data()!);
     return userModel;
   }
 
   @override
   Future<List<UserModel>> getItemList() {
+    // ignore: todo
     // TODO: implement getItemList
     throw UnimplementedError();
   }
@@ -49,12 +51,14 @@ class UserModelProvider implements FirestoreProvider<UserModel> {
 
   @override
   Future<void> removeAllItems() {
+    // ignore: todo
     // TODO: implement removeAllItems
     throw UnimplementedError();
   }
 
   @override
   Future<bool> removeItem(int id) {
+    // ignore: todo
     // TODO: implement removeItem
     throw UnimplementedError();
   }
