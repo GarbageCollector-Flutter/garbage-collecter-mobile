@@ -7,7 +7,7 @@ void setCollectionReference(CollectionReference<Map<String, dynamic>> collection
 
   Future<T?> getItem(String id);
   Future<List<T>> getItemList();
-  Future<bool> updateItem(int id,T model);
+  Future<bool> updateItem(String id,T model);
   Future<bool> removeItem(int id);
   Future<bool> insertItem(T model);
   Future<void> removeAllItems();

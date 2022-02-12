@@ -8,6 +8,7 @@ import 'package:first_three/model/user/user_model_provider.dart';
 import 'package:first_three/model/user_officer/user_officer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../model/user/user_model.dart';
 part 'operation_detail_view_model.g.dart';
 
@@ -17,6 +18,9 @@ class OperationDetailViewModel = _OperationDetailViewModelBase
 abstract class _OperationDetailViewModelBase with Store {
   BuildContext? context;
   late String operationPath;
+
+   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
   @observable
   OperationModel? operationModel;
   @observable
@@ -68,6 +72,7 @@ var garbage_collecters = ObservableList<UserModel>();
   }
 
   Future<void> getCollecters() async {
+     garbage_collecters.clear();
     for (dynamic item in operationModel!.garbageCollecters) {
       UserModel? collecter = await userModelProvider.getItem(item);
       if (collecter != null) {
@@ -89,6 +94,19 @@ var garbage_collecters = ObservableList<UserModel>();
         officers.add(userOfficer);      }
     }
     return;
+  }
+  void addPhoto(){
 
+  }
+ Future <void> addCollecter()async{
+     final SharedPreferences prefs = await _prefs;
+    String? userId=  prefs.getString('currentUserPhone');
+    if(userId!=null){
+      if(operationModel!=null){
+    operationModel!.garbageCollecters.add(userId);
+   await  operationModelProvider.updateItem(operationModel!.docId, operationModel!);
+      }
+
+    }
   }
 }
