@@ -28,9 +28,15 @@ class OperationModelProvider implements FirestoreProvider<OperationModel> {
   }
 
   @override
-  Future<bool> insertItem(OperationModel model) {
-    // TODO: implement insertItem
-    throw UnimplementedError();
+  Future<bool> insertItem(OperationModel model)async {
+       try {
+      await collectionReference.add(model.toJson());
+    
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
   }
 
   @override
