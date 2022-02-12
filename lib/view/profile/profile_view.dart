@@ -29,9 +29,9 @@ class _ProfileViewState extends BaseState<ProfileView> {
           viewModel.setContext(this.context);
           viewModel.userId =
               ModalRoute.of(context)!.settings.arguments as String;
-              viewModel.setOperationProviderReference();
-              viewModel.setOperationProviderReference();
-              viewModel.getUser();
+          viewModel.setOperationProviderReference();
+          viewModel.setOperationProviderReference();
+          viewModel.getUser();
         },
         onPageBuilder: (context, value) => scaffold);
   }
@@ -51,7 +51,8 @@ class _ProfileViewState extends BaseState<ProfileView> {
               left: 0,
               right: 0,
               top: 20,
-              child: Padding(padding: const EdgeInsets.all(8.0), child: myAppBar)),
+              child:
+                  Padding(padding: const EdgeInsets.all(8.0), child: myAppBar)),
         ],
       ));
 
@@ -70,13 +71,11 @@ class _ProfileViewState extends BaseState<ProfileView> {
           style: TextStyle(fontSize: 22, color: Colors.white),
         ),
       );
-  Widget get body =>Observer(builder: (context){
-    return Column(children: [
-    userIdentity,
-    operations,
-    createNewOperation
-    ],);
-  });
+  Widget get body => Observer(builder: (context) {
+        return Column(
+          children: [userIdentity, operations, createNewOperation],
+        );
+      });
 
   Widget get userIdentity => EmptySurface(
         child: Column(
@@ -86,50 +85,52 @@ class _ProfileViewState extends BaseState<ProfileView> {
                 child: Image.asset(ApplicationConstants.USER_PROFILE_PATH,
                     color: themeData.primaryColorLight)),
             Text(
-              viewModel.userModel != null?viewModel.userModel!.name:"isim soyisim",
+              viewModel.userModel != null
+                  ? viewModel.userModel!.name
+                  : "isim soyisim",
               style: const TextStyle(fontSize: 22, color: Colors.black),
             ),
             const SizedBox(
               height: 20,
             ),
             Text(
-               viewModel.userModel != null?viewModel.userModel!.phone:"telefon numarası",
+              viewModel.userModel != null
+                  ? viewModel.userModel!.phone
+                  : "telefon numarası",
               style: const TextStyle(fontSize: 22, color: Colors.black),
             ),
-            
           ],
         ),
       );
 
-        Widget get operations => Padding(
+  Widget get operations => Padding(
       padding: const EdgeInsets.all(8),
       child: Observer(
+        
         builder: (context) {
           return Column(
-           children: [
+            children: [
               for (OperationModel item in viewModel.operations)
                 Container(
                   margin: const EdgeInsets.only(bottom: 15.0),
                   child: GameModeCard(
                     maxHeight: 150,
                     maxWidth: 500,
-
-                 
-
-                        icon: Padding(
-
-                    padding: const EdgeInsets.all(8.0),
-                    child: ClipRRect(
-                       borderRadius: BorderRadius.circular(8.0),
-                       
-                      child: Image.network(item.beforePhoto[0], fit: BoxFit.fill,)),
-                  ),
-
+                    icon: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image.network(
+                            item.beforePhoto[0],
+                            fit: BoxFit.fill,
+                          )),
+                    ),
                     firstTitle: item.location,
-                    subTitle:item.operationStart.toString(),
+                    subTitle: item.operationStart.toString(),
                     onTap: () {
-                             NavigationService.instance.navigateToPage(
-                          path: NavigationConstants.OPERATION_DETAIL, data: item.docId);
+                      NavigationService.instance.navigateToPage(
+                          path: NavigationConstants.OPERATION_DETAIL,
+                          data: item.docId);
                     },
                   ),
                 ),
@@ -137,12 +138,10 @@ class _ProfileViewState extends BaseState<ProfileView> {
           );
         },
       ));
-        Widget get createNewOperation => ElevatedButton(
+  Widget get createNewOperation => ElevatedButton(
       onPressed: () {
         NavigationService.instance.navigateToPage(
-          path : NavigationConstants.OPERATION_FORM,
-          data: viewModel.userId
-        );
+            path: NavigationConstants.OPERATION_FORM, data: viewModel.userId);
       },
       child: Container(
         width: dynamicWidth(0.5),
