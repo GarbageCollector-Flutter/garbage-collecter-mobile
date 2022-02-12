@@ -1,8 +1,10 @@
 import 'package:first_three/core/components/init/not_found_widget.dart';
 import 'package:first_three/core/constants/navigation/navigation_constants.dart';
+import 'package:first_three/model/operations/operation_model.dart';
 import 'package:first_three/model/user/user_model.dart';
 import 'package:first_three/view/home/home_view.dart';
 import 'package:first_three/view/login/login_view.dart';
+import 'package:first_three/view/officier_form/officier_form_view.dart';
 import 'package:first_three/view/operation_detail/operation_detail_view.dart';
 import 'package:first_three/view/operation_form/operation_form_view.dart';
 import 'package:first_three/view/otp_sign/otp_sign_view.dart';
@@ -39,6 +41,10 @@ class NavigationRoute {
       case NavigationConstants.OPERATION_FORM:
         final arguments = args.arguments as String;
         return normalNavigate(OperationFormView(), NavigationConstants.OPERATION_FORM,
+            args: arguments);
+               case NavigationConstants.OFFICER_FORM:
+        final arguments = args.arguments as OperationModel;
+        return normalNavigate(OfficierFormView(), NavigationConstants.OFFICER_FORM,
             args: arguments);
 
       default:
