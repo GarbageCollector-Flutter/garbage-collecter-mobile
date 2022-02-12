@@ -66,7 +66,7 @@ class UserModelProvider implements FirestoreProvider<UserModel> {
   }
 
   @override
-  Future<bool> updateItem(int id, UserModel model) {
+  Future<bool> updateItem(String id, UserModel model) {
     // TODO: implement updateItem
     throw UnimplementedError();
   }
