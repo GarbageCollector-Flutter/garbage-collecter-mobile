@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:first_three/core/base/state/base_state.dart';
 import 'package:first_three/core/base/view/base_view.dart';
@@ -8,6 +10,7 @@ import 'package:first_three/model/user_officer/user_officer.dart';
 import 'package:first_three/view/operation_detail/operation_detail_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:image_picker/image_picker.dart';
 
 class OperationDetailView extends StatefulWidget {
   const OperationDetailView({Key? key}) : super(key: key);
@@ -20,6 +23,61 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
   late OperationDetailViewModel viewModel;
   final f = DateFormat('yyyy-MM-dd hh:mm');
   int rank = 0;
+
+  File? imgFile;
+  String? tempFotoUrl;
+
+
+  void _resimSec(
+      ImageSource source, BuildContext context) async {
+    final picker = ImagePicker();
+    var secilen = await picker.getImage(source: source);
+
+
+      if(secilen != null){
+         imgFile = File(secilen.path);
+         print(secilen.path);
+          Navigator.pop(context);
+
+      //upload firabase
+     //     var url = await StrageService().userimgUpload(imgFile!, userID);
+   
+        // setState(() {});
+      }
+  }
+
+    void _showImageDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              title: const Text("Galeriden Fotoğraf Seç"),
+              onTap: () {
+                _resimSec(ImageSource.gallery, context);
+              },
+            ),
+            ListTile(
+              title: const Text("Kameradan Fotoğraf Çek"),
+              onTap: () {
+                _resimSec(ImageSource.camera, context);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return BaseView(
@@ -34,6 +92,8 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
         },
         onPageBuilder: (context, value) => scaffold);
   }
+
+
 
   Widget get scaffold => Scaffold(
           body: Stack(
@@ -151,16 +211,29 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
         SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-              children: [
-                  for(String imgUrl in viewModel.operationModel!.afterPhoto)
-                 Container(
-                   margin: EdgeInsets.all(5),
-                   height: 200,
-                   width: 200,
-                   child: Image.network(imgUrl),
 
-                 ),
-            
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children:  [
+                const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+                const Text(
+                  "öncesi",
+                  style: TextStyle(fontSize: 25),
+                ),
+                 GestureDetector(
+                  onTap: () {
+                   _showImageDialog(context);
+                  },
+                  behavior: HitTestBehavior.opaque,
+                  child: const Icon(
+                    Icons.add,
+                    size: 27,
+                  ),
+                )
+
+
               ],
             )),
       ]));
@@ -190,14 +263,27 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
         SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-              children: [
-                for(String imgUrl in viewModel.operationModel!.beforePhoto)
-                  Container(
-                   margin: EdgeInsets.all(5),
-                   height: 200,
-                   width: 200,
-                   child: Image.network(imgUrl),
-                 ),
+
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children:  [
+                const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+                const Text(
+                  "sonrası",
+                  style: TextStyle(fontSize: 25),
+                ),
+                GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: (){},
+                  child: const Icon(
+                    Icons.add,
+                    size: 27,
+                  ),
+                )
+
+
               ],
             )),
       ]));
