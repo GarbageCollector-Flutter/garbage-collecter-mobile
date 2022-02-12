@@ -48,8 +48,8 @@ class _GameModeCardState extends State<GameModeCard> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                height: 130,
-                width: 160,
+                height: 300,
+                width: 180,
                 child: widget.icon,
               ),
               const VerticalDivider(
@@ -61,21 +61,26 @@ class _GameModeCardState extends State<GameModeCard> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    widget.firstTitle,
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: false,
-                    style:const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
+                  Container(
+                    alignment: Alignment.center,
+                    width: 140,
+                    child: Text(
+                      widget.firstTitle,
+                      overflow: TextOverflow.fade,
+                        maxLines: 1,
+                      softWrap: false,
+                      style:const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17),
+                    ),
                   ),
                   const SizedBox(height: 10,),
                   Text(
                     widget.subTitle,
                     overflow: TextOverflow.ellipsis,
                     softWrap: false,
-                    style: const TextStyle(color: Colors.black, fontSize: 20),
+                    style: const TextStyle(color: Colors.black, fontSize: 17),
                   ),
                
                 ],

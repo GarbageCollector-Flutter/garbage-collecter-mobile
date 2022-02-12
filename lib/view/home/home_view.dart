@@ -172,21 +172,20 @@ class _HomeViewState extends BaseState<HomeView> {
                     maxHeight: 150,
                     maxWidth: 500,
 
-                      icon: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ClipRRect(
-                       borderRadius: BorderRadius.circular(8.0),
-                       
-                      child:  Image.network(
+                      icon:  Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: Image.network(
                         item.beforePhoto.isEmpty ?  
                        ApplicationConstants.DEFAULT_IMG_URL : 
                         item.beforePhoto[0]
                       ,
                          fit: BoxFit.fill,)),
-                  ),
+                    ),
                 //    icon:  Text("fotoğraf eklenecek"),
 
-                    firstTitle: item.operationName,
+                    firstTitle: item.location,
                     subTitle: item.operationStart.toFormattedTime,
                     onTap: () {
                       NavigationService.instance.navigateToPage(
@@ -212,16 +211,15 @@ class _HomeViewState extends BaseState<HomeView> {
                     maxHeight: 150,
                     maxWidth: 500,
                     icon: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(12.0),
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
-                          child: SafeArea(
-                            child: Image.network(
-                                item.beforePhoto.isEmpty
-                                    ? "https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/recycle-256.png"
-                                    : item.beforePhoto[0],
-                                fit: BoxFit.fill),
-                          )),
+                          child: Image.network(
+                        item.beforePhoto.isEmpty ?  
+                       ApplicationConstants.DEFAULT_IMG_URL : 
+                        item.beforePhoto[0]
+                      ,
+                         fit: BoxFit.fill,)),
                     ),
                     firstTitle: item.location,
                     subTitle: item.operationStart.toFormattedTime,
