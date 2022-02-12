@@ -7,6 +7,7 @@ import 'package:first_three/core/base/view/base_view.dart';
 import 'package:first_three/core/components/widgets/cards/empty_surface.dart';
 import 'package:first_three/core/components/widgets/cards/game_mode_card.dart';
 import 'package:first_three/core/components/widgets/others/my_appbar.dart';
+import 'package:first_three/core/constants/app/app_constants.dart';
 import 'package:first_three/core/constants/navigation/navigation_constants.dart';
 import 'package:first_three/core/init/navigation/navigation_service.dart';
 import 'package:first_three/model/operations/operation_model.dart';
@@ -170,18 +171,21 @@ class _HomeViewState extends BaseState<HomeView> {
                   child: GameModeCard(
                     maxHeight: 150,
                     maxWidth: 500,
-                    icon: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Image.network(
-                            item.beforePhoto.isEmpty
-                                ? "https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/recycle-256.png"
-                                : item.beforePhoto[0],
-                            fit: BoxFit.fill,
-                          )),
-                    ),
-                    //    icon:  Text("fotoğraf eklenecek"),
+
+                      icon: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ClipRRect(
+                       borderRadius: BorderRadius.circular(8.0),
+                       
+                      child:  Image.network(
+                        item.beforePhoto.isEmpty ?  
+                       ApplicationConstants.DEFAULT_IMG_URL : 
+                        item.beforePhoto[0]
+                      ,
+                         fit: BoxFit.fill,)),
+                  ),
+                //    icon:  Text("fotoğraf eklenecek"),
+
                     firstTitle: item.operationName,
                     subTitle: item.operationStart.toFormattedTime,
                     onTap: () {
