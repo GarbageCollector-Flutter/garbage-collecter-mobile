@@ -40,12 +40,13 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
       //     var url = await StrageService().userimgUpload(imgFile!, userID);
 
       // setState(() {});
-    }else{
+    } else {
       return null;
     }
   }
 
-  void _showImageDialog({required BuildContext context ,required bool isBefore}) {
+  void _showImageDialog(
+      {required BuildContext context, required bool isBefore}) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -54,12 +55,12 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
           children: <Widget>[
             ListTile(
               title: const Text("Galeriden Fotoğraf Seç"),
-              onTap: () async{
-              File? imgFile =await  _resimSec(ImageSource.gallery);
-              if(imgFile!=null){
-                viewModel.addPhoto(imgFile: imgFile, isBefore: isBefore);
-              }
-              Navigator.pop(context);
+              onTap: () async {
+                File? imgFile = await _resimSec(ImageSource.gallery);
+                if (imgFile != null) {
+                  viewModel.addPhoto(imgFile: imgFile, isBefore: isBefore);
+                }
+                Navigator.pop(context);
               },
             ),
             ListTile(
@@ -85,7 +86,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
           viewModel.operationPath =
               ModalRoute.of(context)!.settings.arguments as String;
           await viewModel.getOperation();
-         viewModel.getCurrentUser();
+          viewModel.getCurrentUser();
         },
         onPageBuilder: (context, value) => scaffold);
   }
@@ -197,8 +198,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
               ),
               GestureDetector(
                 onTap: () {
-
-                  _showImageDialog(context :context,isBefore: true);
+                  _showImageDialog(context: context, isBefore: true);
                 },
                 behavior: HitTestBehavior.opaque,
                 child: const Icon(
@@ -211,8 +211,32 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
         ),
         Divider(),
         SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-        ),
+            scrollDirection: Axis.horizontal,
+            child: viewModel.operationModel!.beforePhoto.isEmpty
+                ? Container(
+                    child: Center(
+                        child: Text("+ butonu ile görsel ekleyebilirsiniz...")),
+                    // color: Colors.black45,
+                    height: 150.0,
+                  )
+                : Row(
+                    children: [
+                      for (String imgUrl
+                          in viewModel.operationModel!.beforePhoto)
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.network(
+                              imgUrl,
+                              height: 150.0,
+                              width: 100.0,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                    ],
+                  )),
       ]));
   Widget get afterPhotos => EmptySurface(
           child: Column(children: [
@@ -232,7 +256,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
                 GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTap: () {
-                    _showImageDialog(isBefore:false, context: context);
+                    _showImageDialog(isBefore: false, context: context);
                   },
                   child: const Icon(
                     Icons.add,
@@ -244,6 +268,28 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
         Divider(),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
+          child: viewModel.operationModel!.afterPhoto.isEmpty
+              ? Container(
+                  child: const Center(
+                      child: Text("+ butonu ile görsel ekleyebilirsiniz...")),
+                  // color: Colors.black45,
+                  height: 150.0,
+                )
+              : Row(children: [
+                  for (String imgUrl in viewModel.operationModel!.afterPhoto)
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Image.network(
+                          imgUrl,
+                          height: 150.0,
+                          width: 100.0,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    )
+                ]),
         ),
       ]));
 

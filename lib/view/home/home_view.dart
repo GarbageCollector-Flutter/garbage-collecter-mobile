@@ -7,6 +7,7 @@ import 'package:first_three/core/base/view/base_view.dart';
 import 'package:first_three/core/components/widgets/cards/empty_surface.dart';
 import 'package:first_three/core/components/widgets/cards/game_mode_card.dart';
 import 'package:first_three/core/components/widgets/others/my_appbar.dart';
+import 'package:first_three/core/constants/app/app_constants.dart';
 import 'package:first_three/core/constants/navigation/navigation_constants.dart';
 import 'package:first_three/core/init/navigation/navigation_service.dart';
 import 'package:first_three/model/operations/operation_model.dart';
@@ -165,7 +166,7 @@ class _HomeViewState extends BaseState<HomeView> {
                        
                       child:  Image.network(
                         item.beforePhoto.isEmpty ?  
-                        "https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/recycle-256.png" : 
+                       ApplicationConstants.DEFAULT_IMG_URL : 
                         item.beforePhoto[0]
                       ,
                          fit: BoxFit.fill,)),

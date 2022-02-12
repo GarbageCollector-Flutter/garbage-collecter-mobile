@@ -21,7 +21,7 @@ final firebase_storage.Reference _storage =
       print(randomName);
 
     firebase_storage.UploadTask uploadTask =
-        _storage.child("images/userpictures/$id.jpg").putFile(imageFile);
+        _storage.child("images/userpictures/$id$randomName.jpg").putFile(imageFile);
 
     firebase_storage.TaskSnapshot snapshot = await uploadTask;
 
