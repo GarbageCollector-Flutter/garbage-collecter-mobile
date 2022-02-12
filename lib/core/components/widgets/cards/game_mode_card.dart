@@ -63,6 +63,8 @@ class _GameModeCardState extends State<GameModeCard> {
                 children: [
                   Text(
                     widget.firstTitle,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,
                     style:const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -71,6 +73,8 @@ class _GameModeCardState extends State<GameModeCard> {
                   const SizedBox(height: 10,),
                   Text(
                     widget.subTitle,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,
                     style: const TextStyle(color: Colors.black, fontSize: 20),
                   ),
                

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:first_three/core/base/state/base_state.dart';
@@ -145,9 +147,12 @@ class _HomeViewState extends BaseState<HomeView> {
       padding: EdgeInsets.all(8),
       child: Observer(
         builder: (context) {
+
+        
           return Column(
             children: [
               for (OperationModel item in viewModel.continuingOpertaions)
+             
                 Container(
                   margin: const EdgeInsets.only(bottom: 15.0),
                   child: GameModeCard(
@@ -158,7 +163,12 @@ class _HomeViewState extends BaseState<HomeView> {
                     child: ClipRRect(
                        borderRadius: BorderRadius.circular(8.0),
                        
-                      child: Image.network(item.beforePhoto[0], fit: BoxFit.fill,)),
+                      child:  Image.network(
+                        item.beforePhoto.isEmpty ?  
+                        "https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/recycle-256.png" : 
+                        item.beforePhoto[0]
+                      ,
+                         fit: BoxFit.fill,)),
                   ),
                 //    icon:  Text("fotoğraf eklenecek"),
                     firstTitle: item.operationName,
@@ -185,14 +195,27 @@ class _HomeViewState extends BaseState<HomeView> {
                   child: GameModeCard(
                     maxHeight: 150,
                     maxWidth: 500,
-                    icon: Text("fotoğraf eklenecek"),
-                  // icon: Padding(
-                  //   padding: const EdgeInsets.all(8.0),
-                  //   child: ClipRRect(
-                  //      borderRadius: BorderRadius.circular(8.0),
-                       
-                  //     child: Image.network(item.beforePhoto[0], fit: BoxFit.fill,)),
-                  // ),
+
+                 
+                  icon: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ClipRRect(
+                       borderRadius: BorderRadius.circular(8.0),
+                      
+                     
+                      child: SafeArea(
+                        
+                        child: Image.network(
+                              item.beforePhoto.isEmpty ?  
+                          "https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/recycle-256.png" : 
+                           item.beforePhoto[0]
+                        ,
+                          fit: BoxFit.fill),
+                      )),
+                        
+                  ),
+               
+
                     firstTitle: item.location,
                     subTitle:item.operationStart.toString(),
                     onTap: () {
