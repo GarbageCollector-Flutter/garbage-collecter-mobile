@@ -181,7 +181,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
           );
         }
       });
-  Widget get beforePhotos => EmptySurface(
+  Widget get beforePhotos =>  viewModel.operationModel !=null ? EmptySurface(
           child: Column(children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -237,8 +237,8 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
                         ),
                     ],
                   )),
-      ]));
-  Widget get afterPhotos => EmptySurface(
+      ])):SizedBox();
+  Widget get afterPhotos => viewModel.operationModel !=null ?EmptySurface(
           child: Column(children: [
         Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -291,7 +291,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
                     )
                 ]),
         ),
-      ]));
+      ])):SizedBox();
 
   Widget get organizator => Observer(builder: (context) {
         if (viewModel.organizator != null) {
@@ -342,7 +342,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
                   "toplayıcılar",
                   style: TextStyle(fontSize: 25),
                 ),
-                addOrRemoveCollecter()
+               // addOrRemoveCollecter()
                
               ],
             ),

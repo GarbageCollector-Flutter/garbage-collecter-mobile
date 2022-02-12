@@ -123,13 +123,13 @@ class _ProfileViewState extends BaseState<ProfileView> {
                   child: GameModeCard(
                     maxHeight: 150,
                     maxWidth: 500,
-                    icon: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    icon:  Padding(
+                      padding: const EdgeInsets.all(12.0),
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
                           child: Image.network(
                         item.beforePhoto.isEmpty ?  
-                        "https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/recycle-256.png" : 
+                       ApplicationConstants.DEFAULT_IMG_URL : 
                         item.beforePhoto[0]
                       ,
                          fit: BoxFit.fill,)),
