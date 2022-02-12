@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:first_three/core/constants/firebase/firebase_constatns.dart';
 import 'package:first_three/core/constants/navigation/navigation_constants.dart';
@@ -23,19 +24,19 @@ abstract class _LoginViewModelBase with Store {
   UserModelProvider userFirestoreProvider = UserModelProvider();
 
   void setContext(BuildContext context) {
-    this.context = context;
-      CollectionReference<Map<String, dynamic>>  collectionReference= FirebaseFirestore
-        .instance
-        .collection(FirebaseConstants.USERS_PATH);
-      
-    userFirestoreProvider.setCollectionReference(collectionReference);
+    this.context = context;      
+    userFirestoreProvider.setCollectionReference();
   }
 
   Future<bool> registerRequest(UserModel playerModel) async {
     if (await userFirestoreProvider.isExist(playerModel)) {
       throw ("bu numaraya ait kayıt mevcut lütfen giriş yapınız");
     }
-    return await userFirestoreProvider.insertItem(playerModel);
+    UserModel userModel = await userFirestoreProvider.insertItem(playerModel);
+    if(userModel !=null){
+      return true;
+    }
+    return false;
   }
 
   phoneNumberValidator() {

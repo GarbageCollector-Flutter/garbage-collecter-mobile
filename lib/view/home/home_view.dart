@@ -50,11 +50,7 @@ class _HomeViewState extends BaseState<HomeView> {
         onModelReady: (model) async {
           viewModel = model as HomeViewModel;
           viewModel.setContext(this.context);
-          await viewModel.getAllOperations().then((value) {
-            setState(() {
-              
-            });
-          });
+           viewModel.getAllOperations();
         },
         onPageBuilder: (context, value) => scaffold);
   }
@@ -69,7 +65,11 @@ class _HomeViewState extends BaseState<HomeView> {
           
               child: Padding(
                 padding: const EdgeInsets.all(2.0),
-                child: tabs,
+                child: Observer(
+                  builder: (context) {
+                    return tabs;
+                  }
+                ),
               )),
           Positioned(
               left: 0,
@@ -109,11 +109,8 @@ class _HomeViewState extends BaseState<HomeView> {
           length: 2,
           child: RefreshIndicator(
             onRefresh: () async =>
-                await viewModel.getAllOperations().then((value) {
-                  setState(() {
-                    
-                  });
-                }),
+                await viewModel.getAllOperations(),
+                
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -161,9 +158,7 @@ class _HomeViewState extends BaseState<HomeView> {
 
   Widget get outDated => Padding(
       padding: EdgeInsets.all(8),
-      child: Observer(
-        builder: (context) {
-          return Column(
+      child: Column(
             children: [
               for (OperationModel item in viewModel.outDatedOpertaions)
                 Container(
@@ -195,14 +190,10 @@ class _HomeViewState extends BaseState<HomeView> {
                   ),
                 ),
             ],
-          );
-        },
-      ));
+          ));
   Widget get continuing => Padding(
       padding: EdgeInsets.all(8),
-      child: Observer(
-        builder: (context) {
-          return Column(
+      child: Column(
             children: [
               for (OperationModel item in viewModel.continuingOpertaions)
                 Container(
@@ -231,7 +222,5 @@ class _HomeViewState extends BaseState<HomeView> {
                   ),
                 ),
             ],
-          );
-        },
-      ));
+          ));
 }

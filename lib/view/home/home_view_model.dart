@@ -14,36 +14,31 @@ abstract class _HomeViewModelBase with Store {
   OperationModelProvider operationModelProvider = OperationModelProvider();
 
   @observable
-  List<OperationModel> outDatedOpertaions = [];
+  ObservableList<OperationModel> outDatedOpertaions = ObservableList<OperationModel>();
   @observable
-  List<OperationModel> continuingOpertaions = [];
+  ObservableList<OperationModel> continuingOpertaions = ObservableList<OperationModel>();
 
   void setContext(BuildContext context) async {
     this.context = context;
-    CollectionReference<Map<String, dynamic>>? collectionReference =
-        FirebaseFirestore.instance
-            .collection(FirebaseConstants.OPERATIONS_PATH);
-    operationModelProvider.setCollectionReference(collectionReference);
+    operationModelProvider.setCollectionReference();
   }
-
-
+    @action
   Future<void> getAllOperations() async {
-     List<OperationModel> allOperations =[];
-     continuingOpertaions.clear();
-     outDatedOpertaions.clear();
+    List<OperationModel> allOperations = [];
+    continuingOpertaions.clear();
+    outDatedOpertaions.clear();
 
     allOperations = await operationModelProvider.getItemList();
-    for(OperationModel operationModel in allOperations){
-      DateTime dateStart = DateTime.fromMillisecondsSinceEpoch(operationModel.operationStart); 
-      if(dateStart.isAfter(DateTime.now())){
-  continuingOpertaions.add(operationModel);
-      }else{
+    for (OperationModel operationModel in allOperations) {
+      DateTime dateStart =
+          DateTime.fromMillisecondsSinceEpoch(operationModel.operationStart);
+      if (dateStart.isAfter(DateTime.now())) {
+        continuingOpertaions.add(operationModel);
+      } else {
         outDatedOpertaions.add(operationModel);
       }
     }
     print("-----------------");
-    return;
-  
-
+    //return;
   }
 }

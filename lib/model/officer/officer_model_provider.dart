@@ -24,7 +24,7 @@ class OfficerModelProvider implements FirestoreProvider<OfficerModel> {
   }
 
   @override
-  Future<bool> insertItem(OfficerModel model) {
+  Future<OfficerModel> insertItem(OfficerModel model) {
     // TODO: implement insertItem
     throw UnimplementedError();
   }
@@ -48,7 +48,10 @@ class OfficerModelProvider implements FirestoreProvider<OfficerModel> {
   }
 
   @override
-  void setCollectionReference(CollectionReference<Map<String, dynamic>> collectionReference) {
+  void setCollectionReference() {
+
+  }
+   void setSpecificCollectionReference(CollectionReference<Map<String, dynamic>> collectionReference) {
     this.collectionReference = collectionReference;
   }
 
@@ -57,5 +60,6 @@ class OfficerModelProvider implements FirestoreProvider<OfficerModel> {
     // TODO: implement updateItem
     throw UnimplementedError();
   }
+
   
 }

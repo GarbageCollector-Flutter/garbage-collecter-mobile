@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:first_three/core/constants/firebase/firebase_constatns.dart';
 import 'package:first_three/core/init/database/firestore_provider.dart';
 import 'package:first_three/model/operations/operation_model.dart';
 
@@ -28,16 +29,16 @@ class OperationModelProvider implements FirestoreProvider<OperationModel> {
   }
 
   @override
-  Future<bool> insertItem(OperationModel model) async {
+  Future<OperationModel?> insertItem(OperationModel model) async {
     try {
       DocumentReference<Map<String, dynamic>> documentReference =
           await collectionReference.add(model.toJson());
       documentReference.update({"docId": documentReference.id});
-
-      return true;
+      model.docId = documentReference.id;
+      return model;
     } catch (e) {
       print(e.toString());
-      return false;
+      return null;
     }
   }
 
@@ -60,9 +61,9 @@ class OperationModelProvider implements FirestoreProvider<OperationModel> {
   }
 
   @override
-  void setCollectionReference(
-      CollectionReference<Map<String, dynamic>> collectionReference) {
-    this.collectionReference = collectionReference;
+  void setCollectionReference() {
+    this.collectionReference = FirebaseFirestore.instance
+        .collection(FirebaseConstants.OPERATIONS_PATH);
   }
 
   @override

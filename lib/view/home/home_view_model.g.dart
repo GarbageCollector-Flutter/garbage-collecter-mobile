@@ -13,13 +13,13 @@ mixin _$HomeViewModel on _HomeViewModelBase, Store {
       Atom(name: '_HomeViewModelBase.outDatedOpertaions');
 
   @override
-  List<OperationModel> get outDatedOpertaions {
+  ObservableList<OperationModel> get outDatedOpertaions {
     _$outDatedOpertaionsAtom.reportRead();
     return super.outDatedOpertaions;
   }
 
   @override
-  set outDatedOpertaions(List<OperationModel> value) {
+  set outDatedOpertaions(ObservableList<OperationModel> value) {
     _$outDatedOpertaionsAtom.reportWrite(value, super.outDatedOpertaions, () {
       super.outDatedOpertaions = value;
     });
@@ -29,17 +29,25 @@ mixin _$HomeViewModel on _HomeViewModelBase, Store {
       Atom(name: '_HomeViewModelBase.continuingOpertaions');
 
   @override
-  List<OperationModel> get continuingOpertaions {
+  ObservableList<OperationModel> get continuingOpertaions {
     _$continuingOpertaionsAtom.reportRead();
     return super.continuingOpertaions;
   }
 
   @override
-  set continuingOpertaions(List<OperationModel> value) {
+  set continuingOpertaions(ObservableList<OperationModel> value) {
     _$continuingOpertaionsAtom.reportWrite(value, super.continuingOpertaions,
         () {
       super.continuingOpertaions = value;
     });
+  }
+
+  final _$getAllOperationsAsyncAction =
+      AsyncAction('_HomeViewModelBase.getAllOperations');
+
+  @override
+  Future<void> getAllOperations() {
+    return _$getAllOperationsAsyncAction.run(() => super.getAllOperations());
   }
 
   @override

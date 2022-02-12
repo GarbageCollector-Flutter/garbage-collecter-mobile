@@ -85,7 +85,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
           viewModel.setAllProvidersCollectionReference();
           viewModel.operationPath =
               ModalRoute.of(context)!.settings.arguments as String;
-          await viewModel.getOperation();
+           viewModel.getOperation();
           viewModel.getCurrentUser();
         },
         onPageBuilder: (context, value) => scaffold);
@@ -342,7 +342,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
                   "toplayıcılar",
                   style: TextStyle(fontSize: 25),
                 ),
-               // addOrRemoveCollecter()
+               addOrRemoveCollecter
                
               ],
             ),
@@ -480,15 +480,15 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
           style: TextStyle(fontSize: 25),
         ),
       ));
-  Widget  addOrRemoveCollecter(){
+Widget get addOrRemoveCollecter=>Observer(builder:(context){
+ 
     if(viewModel.operationModel!=null&&viewModel.currentUserModel!=null){
  if( viewModel.operationModel!.garbageCollecters.contains(viewModel.currentUserModel!.phone)){
    return GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTap: () async {
-                    await viewModel.addCollecter();
-                    viewModel.getOperation();
-                    rank = 0;
+               await viewModel.removeCollecter();
+                viewModel.getOperation();
                   },
                   child: Center(
                     child: Icon(
@@ -515,9 +515,10 @@ return  GestureDetector(
                 );
     }
     }else{
-      print("---------------------------nulll bbunlar");
       return Container();
     }
-   
-  }
+
+});
+
+
 }
