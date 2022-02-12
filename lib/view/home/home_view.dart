@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:first_three/core/base/state/base_state.dart';
 import 'package:first_three/core/base/view/base_view.dart';
 import 'package:first_three/core/components/widgets/cards/empty_surface.dart';
-import 'package:first_three/core/components/widgets/cards/game_mode_card.dart';
+import 'package:first_three/core/components/widgets/cards/operation_card.dart';
 import 'package:first_three/core/components/widgets/others/my_appbar.dart';
 import 'package:first_three/core/constants/app/app_constants.dart';
 import 'package:first_three/core/constants/navigation/navigation_constants.dart';
@@ -163,7 +163,7 @@ class _HomeViewState extends BaseState<HomeView> {
               for (OperationModel item in viewModel.outDatedOpertaions)
                 Container(
                   margin: const EdgeInsets.only(bottom: 15.0),
-                  child: GameModeCard(
+                  child: OperationCard(
                     maxHeight: 150,
                     maxWidth: 500,
 
@@ -198,7 +198,7 @@ class _HomeViewState extends BaseState<HomeView> {
               for (OperationModel item in viewModel.continuingOpertaions)
                 Container(
                   margin: const EdgeInsets.only(bottom: 15.0),
-                  child: GameModeCard(
+                  child: OperationCard(
                     maxHeight: 150,
                     maxWidth: 500,
                     icon: Padding(

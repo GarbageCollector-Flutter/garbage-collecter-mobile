@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class GameModeCard extends StatefulWidget {
+class OperationCard extends StatefulWidget {
   final Widget icon;
   final String firstTitle;
   final String subTitle;
@@ -8,7 +8,7 @@ class GameModeCard extends StatefulWidget {
   final double maxHeight;
   final double maxWidth;
 
-  const GameModeCard({
+  const OperationCard({
     Key? key,
     required this.icon,
     required this.firstTitle,
@@ -17,10 +17,10 @@ class GameModeCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _GameModeCardState createState() => _GameModeCardState();
+  _OperationCardState createState() => _OperationCardState();
 }
 
-class _GameModeCardState extends State<GameModeCard> {
+class _OperationCardState extends State<OperationCard> {
   BoxDecoration boxDecoration = BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(20),
@@ -63,7 +63,7 @@ class _GameModeCardState extends State<GameModeCard> {
                 children: [
                   Container(
                     alignment: Alignment.center,
-                    width: 140,
+                    width: 120,
                     child: Text(
                       widget.firstTitle,
                       overflow: TextOverflow.fade,
