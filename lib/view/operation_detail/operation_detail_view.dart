@@ -5,6 +5,8 @@ import 'package:first_three/core/base/state/base_state.dart';
 import 'package:first_three/core/base/view/base_view.dart';
 import 'package:first_three/core/components/widgets/cards/empty_surface.dart';
 import 'package:first_three/core/components/widgets/others/my_appbar.dart';
+import 'package:first_three/core/constants/navigation/navigation_constants.dart';
+import 'package:first_three/core/init/navigation/navigation_service.dart';
 import 'package:first_three/model/user/user_model.dart';
 import 'package:first_three/model/user_officer/user_officer.dart';
 import 'package:first_three/view/operation_detail/operation_detail_view_model.dart';
@@ -121,7 +123,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
           ),
         ),
         title: const Text(
-          "Profil",
+          "Etkinlik Detayı",
           style: TextStyle(fontSize: 22, color: Colors.white),
         ),
       );
@@ -469,7 +471,8 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
 
   Widget get beResponsibleButton => ElevatedButton(
       onPressed: () {
-
+NavigationService.instance.navigateToPage(path: NavigationConstants.OFFICER_FORM,data: viewModel
+.operationModel);
       },
       child: Container(
         width: dynamicWidth(0.5),
