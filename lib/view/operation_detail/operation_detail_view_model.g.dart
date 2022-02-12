@@ -72,13 +72,30 @@ mixin _$OperationDetailViewModel on _OperationDetailViewModelBase, Store {
     });
   }
 
+  final _$currentUserModelAtom =
+      Atom(name: '_OperationDetailViewModelBase.currentUserModel');
+
+  @override
+  UserModel? get currentUserModel {
+    _$currentUserModelAtom.reportRead();
+    return super.currentUserModel;
+  }
+
+  @override
+  set currentUserModel(UserModel? value) {
+    _$currentUserModelAtom.reportWrite(value, super.currentUserModel, () {
+      super.currentUserModel = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
 operationModel: ${operationModel},
 organizator: ${organizator},
 officers: ${officers},
-garbage_collecters: ${garbage_collecters}
+garbage_collecters: ${garbage_collecters},
+currentUserModel: ${currentUserModel}
     ''';
   }
 }

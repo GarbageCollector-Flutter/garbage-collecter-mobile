@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:first_three/core/constants/firebase/firebase_constatns.dart';
 import 'package:first_three/core/init/database/firestore_provider.dart';
 import 'package:first_three/model/user/user_model.dart';
 
@@ -23,12 +24,12 @@ class UserModelProvider implements FirestoreProvider<UserModel> {
   }
 
   @override
-  Future<bool> insertItem(UserModel model) async {
+  Future<UserModel> insertItem(UserModel model) async {
     try {
       await collectionReference.doc(model.phone).set(model.toJson());
-      return true;
+      return model;
     } catch (e) {
-      return false;
+      return model;
     }
   }
 
@@ -60,9 +61,9 @@ class UserModelProvider implements FirestoreProvider<UserModel> {
   }
 
   @override
-  void setCollectionReference(
-      CollectionReference<Map<String, dynamic>> collectionReference) {
-    this.collectionReference = collectionReference;
+  void setCollectionReference() {
+      this.collectionReference = FirebaseFirestore.instance
+        .collection(FirebaseConstants.USERS_PATH);
   }
 
   @override

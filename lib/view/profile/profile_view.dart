@@ -30,8 +30,8 @@ class _ProfileViewState extends BaseState<ProfileView> {
           viewModel.setContext(this.context);
           viewModel.userId =
               ModalRoute.of(context)!.settings.arguments as String;
-          viewModel.setOperationProviderReference();
-          viewModel.setOperationProviderReference();
+          viewModel.userModelProvider.setCollectionReference();
+          viewModel.operationModelProvider.setCollectionReference();
           viewModel.getUser();
         },
         onPageBuilder: (context, value) => scaffold);
@@ -73,11 +73,18 @@ class _ProfileViewState extends BaseState<ProfileView> {
         ),
       );
   Widget get body => Observer(builder: (context) {
-        return SizedBox(
-          height: dynamicHeight(1)-120,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [userIdentity, operations, createNewOperation],
+        return Container(
+          alignment: Alignment.topCenter,
+          height: dynamicHeight(1) - 120,
+          width: dynamicWidth(1),
+          child: RefreshIndicator(
+            onRefresh: () async => await viewModel.getUser(),
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [userIdentity, operations, createNewOperation],
+              ),
             ),
           ),
         );
@@ -112,43 +119,41 @@ class _ProfileViewState extends BaseState<ProfileView> {
   Widget get operations => Padding(
       padding: const EdgeInsets.all(8),
       child: Observer(
-        
         builder: (context) {
-          if(viewModel.operations.isNotEmpty){
-     return Column(
-            children: [
-              for (OperationModel item in viewModel.operations)
-                Container(
-                  margin: const EdgeInsets.only(bottom: 15.0),
-                  child: GameModeCard(
-                    maxHeight: 150,
-                    maxWidth: 500,
-                    icon:  Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Image.network(
-                        item.beforePhoto.isEmpty ?  
-                       ApplicationConstants.DEFAULT_IMG_URL : 
-                        item.beforePhoto[0]
-                      ,
-                         fit: BoxFit.fill,)),
+          if (viewModel.operations.isNotEmpty) {
+            return Column(
+              children: [
+                for (OperationModel item in viewModel.operations)
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 15.0),
+                    child: GameModeCard(
+                      maxHeight: 150,
+                      maxWidth: 500,
+                      icon: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.network(
+                              item.beforePhoto.isEmpty
+                                  ? ApplicationConstants.DEFAULT_IMG_URL
+                                  : item.beforePhoto[0],
+                              fit: BoxFit.fill,
+                            )),
+                      ),
+                      firstTitle: item.location,
+                      subTitle: item.operationStart.toFormattedTime,
+                      onTap: () {
+                        NavigationService.instance.navigateToPage(
+                            path: NavigationConstants.OPERATION_DETAIL,
+                            data: item.docId);
+                      },
                     ),
-                    firstTitle: item.location,
-                    subTitle: item.operationStart.toFormattedTime,
-                    onTap: () {
-                      NavigationService.instance.navigateToPage(
-                          path: NavigationConstants.OPERATION_DETAIL,
-                          data: item.docId);
-                    },
                   ),
-                ),
-            ],
-          );
-          }else{
+              ],
+            );
+          } else {
             return SizedBox();
           }
-     
         },
       ));
   Widget get createNewOperation => ElevatedButton(

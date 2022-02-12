@@ -35,6 +35,7 @@ abstract class _OperationDetailViewModelBase with Store {
   @observable
   var garbage_collecters = ObservableList<UserModel>();
 
+  @observable
   UserModel? currentUserModel;
 
   OperationModelProvider operationModelProvider = OperationModelProvider();
@@ -46,14 +47,8 @@ abstract class _OperationDetailViewModelBase with Store {
   }
 
   void setAllProvidersCollectionReference() {
-    CollectionReference<Map<String, dynamic>>? collectionReference =
-        FirebaseFirestore.instance
-            .collection(FirebaseConstants.OPERATIONS_PATH);
-    operationModelProvider.setCollectionReference(collectionReference);
-
-    CollectionReference<Map<String, dynamic>>? collectionReference2 =
-        FirebaseFirestore.instance.collection(FirebaseConstants.USERS_PATH);
-    userModelProvider.setCollectionReference(collectionReference2);
+    operationModelProvider.setCollectionReference();
+    userModelProvider.setCollectionReference();
   }
 
   void setOfficerPath() {
@@ -62,7 +57,7 @@ abstract class _OperationDetailViewModelBase with Store {
             .collection(FirebaseConstants.OPERATIONS_PATH)
             .doc(operationModel!.docId)
             .collection(FirebaseConstants.OFFICERS_PATH);
-    officerModelProvider.setCollectionReference(collectionReference);
+    officerModelProvider.setSpecificCollectionReference(collectionReference);
   }
 
   Future<void> getOperation() async {
@@ -132,11 +127,33 @@ abstract class _OperationDetailViewModelBase with Store {
             operationModel!.docId, operationModel!);
         if (currentUserModel != null) {
           currentUserModel!.joinedOperations.add(operationPath);
-            await userModelProvider.updateItem(
-            currentUserModel!.phone, currentUserModel!);
+          await userModelProvider.updateItem(
+              currentUserModel!.phone, currentUserModel!);
         }
+      }
+    }
+  }
 
-      
+  Future<void> removeCollecter() async {
+    final SharedPreferences prefs = await _prefs;
+    String? userId = prefs.getString('currentUserPhone');
+    if (userId != null) {
+      if (operationModel != null) {
+        print(operationModel!.garbageCollecters.toString());
+
+        operationModel!.garbageCollecters
+            .removeWhere((element) => element == userId);
+        print(operationModel!.garbageCollecters.toString());
+
+        await operationModelProvider.updateItem(
+            operationModel!.docId, operationModel!);
+        if (currentUserModel != null) {
+          currentUserModel!.joinedOperations
+              .removeWhere((element) => element == operationModel!.docId);
+
+          await userModelProvider.updateItem(
+              currentUserModel!.phone, currentUserModel!);
+        }
       }
     }
   }

@@ -25,7 +25,9 @@ class _OperationFormViewState extends BaseState<OperationFormView> {
         onModelReady: (model) async {
           viewModel = model as OperationFormViewModel;
           viewModel.setContext(this.context);
-          viewModel.setOperationProviderPath();
+          viewModel.operationModelProvider.setCollectionReference();
+          viewModel.userModelProvider.setCollectionReference();
+        
           viewModel.userId =
               ModalRoute.of(context)!.settings.arguments as String;
          

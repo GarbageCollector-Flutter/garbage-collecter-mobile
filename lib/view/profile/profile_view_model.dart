@@ -26,22 +26,7 @@ abstract class _ProfileViewModelBase with Store {
 
   void setContext(BuildContext context) async {
     this.context = context;
-    setUserProviderReference();
   }
-
-  void setUserProviderReference() {
-    CollectionReference<Map<String, dynamic>> collectionReference =
-        FirebaseFirestore.instance.collection(FirebaseConstants.USERS_PATH);
-    userModelProvider.setCollectionReference(collectionReference);
-  }
-
-  void setOperationProviderReference() {
-    CollectionReference<Map<String, dynamic>> collectionReference =
-        FirebaseFirestore.instance
-            .collection(FirebaseConstants.OPERATIONS_PATH);
-    operationModelProvider.setCollectionReference(collectionReference);
-  }
-
   Future<void> getUser() async {
     userModel = await userModelProvider.getItem(userId);
     if (userModel != null) {
@@ -50,6 +35,7 @@ abstract class _ProfileViewModelBase with Store {
   }
 
   Future<void> getUserOperations() async {
+    operations.clear();
     for (String operationId in userModel!.joinedOperations) {
       OperationModel? operationModel =
           await operationModelProvider.getItem(operationId);
