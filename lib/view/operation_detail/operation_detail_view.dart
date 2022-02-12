@@ -128,8 +128,28 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
       });
         Widget get beforePhotos => EmptySurface(
           child: Column(
-          children: [          
-            Text("sonrası",style: TextStyle(fontSize: 25),),
+          children: [   
+                Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+                Text(
+                  "öncesi",
+                  style: TextStyle(fontSize: 25),
+                ),
+                Icon(
+                  Icons.add,
+                  size: 27,
+                )
+              ],
+            ),
+          ),       
+        
             Divider(),
           SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -149,7 +169,26 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
   Widget get afterPhotos => EmptySurface(
           child: Column(
           children: [          
-            Text("öncesi",style: TextStyle(fontSize: 25),),
+           Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+                Text(
+                  "sonrası",
+                  style: TextStyle(fontSize: 25),
+                ),
+                Icon(
+                  Icons.add,
+                  size: 27,
+                )
+              ],
+            ),
+          ),
             Divider(),
           SingleChildScrollView(
           scrollDirection: Axis.horizontal,

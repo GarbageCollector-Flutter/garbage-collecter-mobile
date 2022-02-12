@@ -30,8 +30,9 @@ class OperationModelProvider implements FirestoreProvider<OperationModel> {
   @override
   Future<bool> insertItem(OperationModel model)async {
        try {
-      await collectionReference.add(model.toJson());
-    
+       DocumentReference<Map<String, dynamic>> documentReference= await collectionReference.add(model.toJson());
+       documentReference.update({"docId":documentReference.id});
+  
       return true;
     } catch (e) {
       print(e.toString());
