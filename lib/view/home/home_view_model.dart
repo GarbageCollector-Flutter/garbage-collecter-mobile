@@ -28,7 +28,22 @@ abstract class _HomeViewModelBase with Store {
 
 
   Future<void> getAllOperations() async {
-    continuingOpertaions=   await operationModelProvider.getItemList();
+     List<OperationModel> allOperations =[];
+     continuingOpertaions.clear();
+     outDatedOpertaions.clear();
+
+    allOperations = await operationModelProvider.getItemList();
+    for(OperationModel operationModel in allOperations){
+      DateTime dateStart = DateTime.fromMillisecondsSinceEpoch(operationModel.operationStart); 
+      if(dateStart.isAfter(DateTime.now())){
+  continuingOpertaions.add(operationModel);
+      }else{
+        outDatedOpertaions.add(operationModel);
+      }
+    }
+    print("-----------------");
+    return;
+  
 
   }
 }

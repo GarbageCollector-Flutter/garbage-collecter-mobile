@@ -51,7 +51,6 @@ abstract class _ProfileViewModelBase with Store {
 
   Future<void> getUserOperations() async {
     for (String operationId in userModel!.joinedOperations) {
-      print("++++++++++++++"+operationId);
       OperationModel? operationModel =
           await operationModelProvider.getItem(operationId);
       if (operationModel != null) {
