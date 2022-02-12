@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:first_three/core/base/state/base_state.dart';
 import 'package:first_three/core/base/view/base_view.dart';
+import 'package:first_three/core/components/widgets/buttons/cancel_button.dart';
 import 'package:first_three/core/components/widgets/cards/empty_surface.dart';
 import 'package:first_three/core/components/widgets/others/my_appbar.dart';
 import 'package:first_three/view/operation_form/operation_form_view_model.dart';
@@ -24,12 +25,14 @@ class _OperationFormViewState extends BaseState<OperationFormView> {
         onModelReady: (model) async {
           viewModel = model as OperationFormViewModel;
           viewModel.setContext(this.context);
-           viewModel.userId =
+          viewModel.setOperationProviderPath();
+          viewModel.userId =
               ModalRoute.of(context)!.settings.arguments as String;
-        
+         
         },
         onPageBuilder: (context, value) => scaffold);
   }
+
   Widget get scaffold => Scaffold(
           body: Stack(
         children: [
@@ -46,7 +49,8 @@ class _OperationFormViewState extends BaseState<OperationFormView> {
               left: 0,
               right: 0,
               top: 20,
-              child: Padding(padding: const EdgeInsets.all(8.0), child: myAppBar)),
+              child:
+                  Padding(padding: const EdgeInsets.all(8.0), child: myAppBar)),
         ],
       ));
   Widget get myAppBar => MyAppBar(
@@ -62,10 +66,18 @@ class _OperationFormViewState extends BaseState<OperationFormView> {
         title: const Text(
           "Etkinlik Bilgileri",
           style: TextStyle(fontSize: 22, color: Colors.white),
+
         ),
+           suffix: CancelButton(onTap: ()async{
+           bool isOk = await viewModel.createOperation();
+           if(isOk ==true){
+             Navigator.pop(context);
+           }
+
+                    }, size: Size(120,50),child: Text("kaydet",style: TextStyle(fontSize: 25)),),
       );
-  
- Widget get body => SizedBox(
+
+  Widget get body => SizedBox(
         height: 500,
         width: 100,
         child: EmptySurface(
@@ -77,30 +89,31 @@ class _OperationFormViewState extends BaseState<OperationFormView> {
                 children: [
                   inputLabel("etkinlik ismi"),
                   TextFormField(
-                   controller: viewModel.nameController,
+                    controller: viewModel.nameController,
                     textAlign: TextAlign.center,
                     decoration: const InputDecoration(),
-                
                   ),
                   inputLabel("lokasyon"),
                   TextFormField(
-                   controller: viewModel.locationController,
+                    controller: viewModel.locationController,
                     textAlign: TextAlign.center,
-                  
                     decoration: const InputDecoration(),
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  timePickerStart
-              
+                   SizedBox(
+                    height: 20,
+                  ),
+                  timePickerStart,
+             
                 ],
               ),
             ),
           ),
         ),
       );
-        Widget inputLabel(String text) {
+  Widget inputLabel(String text) {
     return Container(
         margin: const EdgeInsets.only(top: 30),
         child: Text(
@@ -108,7 +121,8 @@ class _OperationFormViewState extends BaseState<OperationFormView> {
           style: const TextStyle(fontSize: 24),
         ));
   }
-    Widget get timePickerStart => TextButton(
+
+  Widget get timePickerStart => TextButton(
       onPressed: () {
         FocusScope.of(context).unfocus();
         DatePicker.showDateTimePicker(context, showTitleActions: true,
@@ -120,11 +134,10 @@ class _OperationFormViewState extends BaseState<OperationFormView> {
           });
         }, currentTime: DateTime.now(), locale: LocaleType.tr);
       },
-      child:  Text("tarihi seçiniz"),
-      // child: Text(
-      //   "turnuva başlangıç tarihi:  ${formatter.format(viewModel.)}  ${viewModel.tournamentStart.hour}:${viewModel.tournamentStart.minute}",
-      //   style: const TextStyle(color: Colors.blue),
-      // )
-      );
-  
+      child: Text(
+        "etkinlik tarihi ${formatter.format(viewModel.startTime)}  ${viewModel.startTime.hour}:${viewModel.startTime.minute}",
+        style: const TextStyle(color: Colors.blue, fontSize: 20),
+      ));
+
+ 
 }

@@ -195,7 +195,8 @@ class _HomeViewState extends BaseState<HomeView> {
                   child: GameModeCard(
                     maxHeight: 150,
                     maxWidth: 500,
-                  //  icon: Text("fotoğraf eklenecek"),
+
+                 
                   icon: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ClipRRect(
@@ -213,6 +214,8 @@ class _HomeViewState extends BaseState<HomeView> {
                       )),
                         
                   ),
+               
+
                     firstTitle: item.location,
                     subTitle:item.operationStart.toString(),
                     onTap: () {

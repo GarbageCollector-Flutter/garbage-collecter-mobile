@@ -11,9 +11,10 @@ class OperationFormViewModel = _OperationFormViewModelBase with _$OperationFormV
 abstract class _OperationFormViewModelBase with Store {
  late BuildContext context;
  late String userId;
- DateTime? startTime;
+ DateTime startTime =DateTime.now();
  TextEditingController nameController = TextEditingController();
  TextEditingController locationController = TextEditingController();
+ OperationModelProvider operationModelProvider = OperationModelProvider();
 
  
   @observable
@@ -23,6 +24,40 @@ abstract class _OperationFormViewModelBase with Store {
 
   void setContext(BuildContext context) async {
     this.context = context;
+  }
+  
+  bool validateForm(){
+    if(nameController.text!=""&&locationController!=""&&startTime.isAfter(DateTime.now())){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  void setOperationProviderPath(){
+       CollectionReference<Map<String, dynamic>>? collectionReference =
+        FirebaseFirestore.instance
+            .collection(FirebaseConstants.OPERATIONS_PATH);
+      operationModelProvider.setCollectionReference(collectionReference);
+  }
+
+
+  OperationModel createOperationModel(){
+    OperationModel operationModel = OperationModel(afterPhoto: [], beforePhoto: [], docId: '', garbageCollecters: [], location: locationController.text, operationName: nameController.text, operationStart: startTime.millisecondsSinceEpoch, organizator: userId);
+   return operationModel;
+  }
+
+  Future<bool> createOperation()async{
+  if(validateForm()){
+   OperationModel operationModel =  createOperationModel();
+
+  return await operationModelProvider.insertItem(operationModel);
+
+  }
+  else{
+   return false;
+  }
+
   }
 
 }

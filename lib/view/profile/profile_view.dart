@@ -113,14 +113,18 @@ class _ProfileViewState extends BaseState<ProfileView> {
                   child: GameModeCard(
                     maxHeight: 150,
                     maxWidth: 500,
-                         icon: Padding(
+
+                 
+
+                        icon: Padding(
+
                     padding: const EdgeInsets.all(8.0),
                     child: ClipRRect(
                        borderRadius: BorderRadius.circular(8.0),
                        
                       child: Image.network(item.beforePhoto[0], fit: BoxFit.fill,)),
                   ),
-                  //  icon: const Text("fotoğraf eklenecek"),
+
                     firstTitle: item.location,
                     subTitle:item.operationStart.toString(),
                     onTap: () {
