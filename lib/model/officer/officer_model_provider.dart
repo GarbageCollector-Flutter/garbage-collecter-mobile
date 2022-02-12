@@ -53,7 +53,7 @@ class OfficerModelProvider implements FirestoreProvider<OfficerModel> {
   }
 
   @override
-  Future<bool> updateItem(int id, OfficerModel model) {
+  Future<bool> updateItem(String id, OfficerModel model) {
     // TODO: implement updateItem
     throw UnimplementedError();
   }

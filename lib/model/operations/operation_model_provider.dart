@@ -12,7 +12,7 @@ class OperationModelProvider implements FirestoreProvider<OperationModel> {
     DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
         await collectionReference.doc(id).get();
     if (documentSnapshot.data() != null)
-    operationModel = OperationModel.fromJson(documentSnapshot.data()!);
+      operationModel = OperationModel.fromJson(documentSnapshot.data()!);
     return operationModel;
   }
 
@@ -28,11 +28,12 @@ class OperationModelProvider implements FirestoreProvider<OperationModel> {
   }
 
   @override
-  Future<bool> insertItem(OperationModel model)async {
-       try {
-       DocumentReference<Map<String, dynamic>> documentReference= await collectionReference.add(model.toJson());
-       documentReference.update({"docId":documentReference.id});
-  
+  Future<bool> insertItem(OperationModel model) async {
+    try {
+      DocumentReference<Map<String, dynamic>> documentReference =
+          await collectionReference.add(model.toJson());
+      documentReference.update({"docId": documentReference.id});
+
       return true;
     } catch (e) {
       print(e.toString());
@@ -65,8 +66,12 @@ class OperationModelProvider implements FirestoreProvider<OperationModel> {
   }
 
   @override
-  Future<bool> updateItem(int id, OperationModel model) {
-    // TODO: implement updateItem
-    throw UnimplementedError();
+  Future<bool> updateItem(String id, OperationModel model) async {
+    try {
+      await collectionReference.doc(id).update(model.toJson());
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

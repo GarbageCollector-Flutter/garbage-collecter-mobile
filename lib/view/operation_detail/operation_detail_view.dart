@@ -78,8 +78,8 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
             child: Column(
               children: [
                 OperationIdentity,
-               afterPhotos,
-               beforePhotos,
+                afterPhotos,
+                beforePhotos,
                 organizator,
                 collecters,
                 for (UserOfficer userOfficer in viewModel.officers)
@@ -87,7 +87,6 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
                 Container(
                     margin: EdgeInsets.only(bottom: 50, top: 10),
                     child: beResponsibleButton),
-                   
               ],
             ),
           ),
@@ -126,86 +125,82 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
           );
         }
       });
-        Widget get beforePhotos => EmptySurface(
-          child: Column(
-          children: [   
-                Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Icon(
-                  Icons.add,
-                  color: Colors.white,
-                ),
-                Text(
-                  "öncesi",
-                  style: TextStyle(fontSize: 25),
-                ),
-                Icon(
-                  Icons.add,
-                  size: 27,
-                )
-              ],
-            ),
-          ),       
-        
-            Divider(),
-          SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child:
-              Row(children: [
-              //   for(String imgUrl in viewModel.operationModel!.afterPhoto)
-              //  Container(
-              //    margin: EdgeInsets.all(5),
-              //    height: 200,
-              //    width: 200,
-              //    child: Image.network(imgUrl),
-              
-              //  ), 
-        ],)
-      ),]
-      ));
-  Widget get afterPhotos => EmptySurface(
-          child: Column(
-          children: [          
-           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Icon(
-                  Icons.add,
-                  color: Colors.white,
-                ),
-                Text(
-                  "sonrası",
-                  style: TextStyle(fontSize: 25),
-                ),
-                Icon(
-                  Icons.add,
-                  size: 27,
-                )
-              ],
-            ),
+  Widget get beforePhotos => EmptySurface(
+          child: Column(children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              Text(
+                "öncesi",
+                style: TextStyle(fontSize: 25),
+              ),
+              Icon(
+                Icons.add,
+                size: 27,
+              )
+            ],
           ),
-            Divider(),
-          SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child:
-              Row(children: [
+        ),
+        Divider(),
+        SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                  for(String imgUrl in viewModel.operationModel!.afterPhoto)
+                 Container(
+                   margin: EdgeInsets.all(5),
+                   height: 200,
+                   width: 200,
+                   child: Image.network(imgUrl),
 
-              // for(String imgUrl in viewModel.operationModel!.beforePhoto)
-              //   Container(
-              //    margin: EdgeInsets.all(5),
-              //    height: 200,
-              //    width: 200,
-              //    child: Image.network(imgUrl),
-              //  ), 
-         
-        ],)
-      ),]
-      ));
+                 ),
+            
+              ],
+            )),
+      ]));
+  Widget get afterPhotos => EmptySurface(
+          child: Column(children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              Text(
+                "sonrası",
+                style: TextStyle(fontSize: 25),
+              ),
+              Icon(
+                Icons.add,
+                size: 27,
+              )
+            ],
+          ),
+        ),
+        Divider(),
+        SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                for(String imgUrl in viewModel.operationModel!.beforePhoto)
+                  Container(
+                   margin: EdgeInsets.all(5),
+                   height: 200,
+                   width: 200,
+                   child: Image.network(imgUrl),
+                 ),
+              ],
+            )),
+      ]));
 
   Widget get organizator => Observer(builder: (context) {
         if (viewModel.organizator != null) {
@@ -247,7 +242,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children:  [
                 Icon(
                   Icons.add,
                   color: Colors.white,
@@ -256,9 +251,19 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
                   "toplayıcılar",
                   style: TextStyle(fontSize: 25),
                 ),
-                Icon(
-                  Icons.add,
-                  size: 27,
+                GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: ()async{
+                  await viewModel.addCollecter();
+                  viewModel.getOperation();
+                  rank =0;
+                  },
+                  child: Center(
+                    child: Icon(
+                      Icons.add,
+                      size: 27,
+                    ),
+                  ),
                 )
               ],
             ),
