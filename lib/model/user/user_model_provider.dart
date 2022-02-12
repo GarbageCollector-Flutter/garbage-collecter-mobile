@@ -66,8 +66,12 @@ class UserModelProvider implements FirestoreProvider<UserModel> {
   }
 
   @override
-  Future<bool> updateItem(String id, UserModel model) {
-    // TODO: implement updateItem
-    throw UnimplementedError();
+  Future<bool> updateItem(String id, UserModel model)async {
+       try {
+      await collectionReference.doc(id).update(model.toJson());
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

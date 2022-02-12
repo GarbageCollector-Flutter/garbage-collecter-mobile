@@ -27,26 +27,25 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
   File? imgFile;
   String? tempFotoUrl;
 
-
-  void _resimSec(
-      ImageSource source, BuildContext context) async {
+  Future<File?> _resimSec(ImageSource source) async {
     final picker = ImagePicker();
+    // ignore: deprecated_member_use
     var secilen = await picker.getImage(source: source);
 
-
-      if(secilen != null){
-         imgFile = File(secilen.path);
-         print(secilen.path);
-          Navigator.pop(context);
+    if (secilen != null) {
+      imgFile = File(secilen.path);
+      return imgFile;
 
       //upload firabase
-     //     var url = await StrageService().userimgUpload(imgFile!, userID);
-   
-        // setState(() {});
-      }
+      //     var url = await StrageService().userimgUpload(imgFile!, userID);
+
+      // setState(() {});
+    }else{
+      return null;
+    }
   }
 
-    void _showImageDialog(BuildContext context) {
+  void _showImageDialog({required BuildContext context ,required bool isBefore}) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -55,14 +54,18 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
           children: <Widget>[
             ListTile(
               title: const Text("Galeriden Fotoğraf Seç"),
-              onTap: () {
-                _resimSec(ImageSource.gallery, context);
+              onTap: () async{
+              File? imgFile =await  _resimSec(ImageSource.gallery);
+              if(imgFile!=null){
+                viewModel.addPhoto(imgFile: imgFile, isBefore: isBefore);
+              }
+              Navigator.pop(context);
               },
             ),
             ListTile(
               title: const Text("Kameradan Fotoğraf Çek"),
               onTap: () {
-                _resimSec(ImageSource.camera, context);
+                _resimSec(ImageSource.camera);
               },
             ),
           ],
@@ -70,13 +73,6 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
       ),
     );
   }
-
-
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -89,11 +85,10 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
           viewModel.operationPath =
               ModalRoute.of(context)!.settings.arguments as String;
           await viewModel.getOperation();
+         viewModel.getCurrentUser();
         },
         onPageBuilder: (context, value) => scaffold);
   }
-
-
 
   Widget get scaffold => Scaffold(
           body: Stack(
@@ -191,81 +186,41 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Icon(
+            children: [
+              const Icon(
                 Icons.add,
                 color: Colors.white,
               ),
-              Text(
+              const Text(
                 "öncesi",
                 style: TextStyle(fontSize: 25),
               ),
-              Icon(
-                Icons.add,
-                size: 27,
+              GestureDetector(
+                onTap: () {
+
+                  _showImageDialog(context :context,isBefore: true);
+                },
+                behavior: HitTestBehavior.opaque,
+                child: const Icon(
+                  Icons.add,
+                  size: 27,
+                ),
               )
             ],
           ),
         ),
         Divider(),
         SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children:  [
-                const Icon(
-                  Icons.add,
-                  color: Colors.white,
-                ),
-                const Text(
-                  "öncesi",
-                  style: TextStyle(fontSize: 25),
-                ),
-                 GestureDetector(
-                  onTap: () {
-                   _showImageDialog(context);
-                  },
-                  behavior: HitTestBehavior.opaque,
-                  child: const Icon(
-                    Icons.add,
-                    size: 27,
-                  ),
-                )
-
-
-              ],
-            )),
+          scrollDirection: Axis.horizontal,
+        ),
       ]));
   Widget get afterPhotos => EmptySurface(
           child: Column(children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              Text(
-                "sonrası",
-                style: TextStyle(fontSize: 25),
-              ),
-              Icon(
-                Icons.add,
-                size: 27,
-              )
-            ],
-          ),
-        ),
-        Divider(),
-        SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Row(
-
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children:  [
+              children: [
                 const Icon(
                   Icons.add,
                   color: Colors.white,
@@ -276,16 +231,20 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
                 ),
                 GestureDetector(
                   behavior: HitTestBehavior.opaque,
-                  onTap: (){},
+                  onTap: () {
+                    _showImageDialog(isBefore:false, context: context);
+                  },
                   child: const Icon(
                     Icons.add,
                     size: 27,
                   ),
                 )
-
-
               ],
             )),
+        Divider(),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+        ),
       ]));
 
   Widget get organizator => Observer(builder: (context) {
@@ -328,7 +287,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children:  [
+              children: [
                 Icon(
                   Icons.add,
                   color: Colors.white,
@@ -339,10 +298,10 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
                 ),
                 GestureDetector(
                   behavior: HitTestBehavior.opaque,
-                  onTap: ()async{
-                  await viewModel.addCollecter();
-                  viewModel.getOperation();
-                  rank =0;
+                  onTap: () async {
+                    await viewModel.addCollecter();
+                    viewModel.getOperation();
+                    rank = 0;
                   },
                   child: Center(
                     child: Icon(
