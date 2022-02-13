@@ -78,7 +78,7 @@ return BaseView(
           ),
         ),
         title: const Text(
-          "Profil",
+          "Görevli Formu",
           style: TextStyle(fontSize: 22, color: Colors.white),
         ),
         suffix: CancelButton(onTap: ()async{
