@@ -24,9 +24,16 @@ class OfficerModelProvider implements FirestoreProvider<OfficerModel> {
   }
 
   @override
-  Future<OfficerModel> insertItem(OfficerModel model) {
-    // TODO: implement insertItem
-    throw UnimplementedError();
+  Future<OfficerModel?> insertItem(OfficerModel model) async{
+      try {
+      DocumentReference<Map<String, dynamic>> documentReference =
+          await collectionReference.add(model.toJson());
+      documentReference.update({"docId": documentReference.id});
+      return model;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 
   @override

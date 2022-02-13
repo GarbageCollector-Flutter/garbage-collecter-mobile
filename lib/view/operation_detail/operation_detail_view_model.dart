@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:first_three/core/constants/firebase/firebase_constatns.dart';
+import 'package:first_three/core/extenstions/string_extension.dart';
 import 'package:first_three/core/services/storage/storage_service.dart';
 import 'package:first_three/model/officer/officer_model.dart';
 import 'package:first_three/model/officer/officer_model_provider.dart';
@@ -112,6 +113,7 @@ abstract class _OperationDetailViewModelBase with Store {
             await operationModelProvider.updateItem(
                 operationModel!.docId, operationModel!);
           }
+             "resim yükleme işlemi tamamlandı".snackBarExtension(context!);
         }
       }
     }

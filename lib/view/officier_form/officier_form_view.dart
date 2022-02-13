@@ -2,9 +2,13 @@ import 'package:first_three/core/base/state/base_state.dart';
 import 'package:first_three/core/base/view/base_view.dart';
 import 'package:first_three/core/components/widgets/cards/empty_surface.dart';
 import 'package:first_three/core/components/widgets/others/my_appbar.dart';
+import 'package:first_three/core/constants/navigation/navigation_constants.dart';
+import 'package:first_three/core/init/navigation/navigation_service.dart';
 import 'package:first_three/model/operations/operation_model.dart';
 import 'package:first_three/view/officier_form/officier_form_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:first_three/core/extenstions/string_extension.dart';
+
 
 class OfficierFormView extends StatefulWidget {
   OfficierFormView({Key? key}) : super(key: key);
@@ -16,16 +20,28 @@ class OfficierFormView extends StatefulWidget {
 class _OfficierFormViewState extends BaseState<OfficierFormView> {
   late OfficierFormViewModel viewModel;
 
+
+
+
   @override
   Widget build(BuildContext context) {
 return BaseView(
         viewModel: OfficierFormViewModel(),
+        onDispose: (){
+            for (final controller in viewModel.controllers) {
+      controller.dispose();
+    }
+        },
         onModelReady: (model) async {
           viewModel = model as OfficierFormViewModel;
           viewModel.setContext(this.context);
          viewModel.operationModelProvider.setCollectionReference();
+         viewModel.userModelProvider.setCollectionReference();
+         await viewModel.getCurrentUser();
             viewModel.operationModel =
               ModalRoute.of(context)!.settings.arguments as OperationModel;
+                       viewModel.setOfficerCollectionRef();
+
         },
         onPageBuilder: (context, value) => scaffold);  }
 
@@ -67,35 +83,24 @@ return BaseView(
       );
   Widget get body=>EmptySurface(
     
-        child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  inputLabel("etkinlik ismi"),
-                  TextFormField(
-                 //   controller: viewModel.nameController,
-                    textAlign: TextAlign.center,
-                    decoration: const InputDecoration(),
-                  ),
-                  inputLabel("lokasyon"),
-                  TextFormField(
-                  //  controller: viewModel.locationController,
-                    textAlign: TextAlign.center,
-                    decoration: const InputDecoration(),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                   SizedBox(
-                    height: 20,
-                  ),
-             
-                ],
-              ),
+        child: SizedBox(
+          height: dynamicHeight(1)-160,
+          width: dynamicWidth(1),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+            _addTile(),
+            Expanded(
+              flex: 1,
+              child: _listView()),
+            _okButton(),
+           
+              ],
             ),
           ),
+        ),
     
     
     
@@ -109,4 +114,71 @@ return BaseView(
           style: const TextStyle(fontSize: 24),
         ));
   }
+  Widget _listView() {
+  return ListView.builder(
+    itemCount: viewModel.fields.length,
+    itemBuilder: (context, index) {
+      return Container(
+        margin: EdgeInsets.all(5),
+        child:  viewModel.fields[index],
+      );
+    },
+  );
+}
+    Widget _addTile() {
+    return ListTile(
+      title: Icon(Icons.add),
+      onTap: () {
+        final controller = TextEditingController();
+        final field = TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "name${viewModel.controllers.length + 1}",
+          ),
+        );
+
+        setState(() {
+          viewModel.controllers.add(controller);
+          viewModel.fields.add(field);
+        });
+      },
+    );
+  }
+  Widget _okButton() {
+  return ElevatedButton(
+    onPressed: () async {
+       
+           String text = viewModel.controllers
+          .where((element) => element.text != "")
+          .fold("", (acc, element) => acc += "${element.text}\n");
+      final alert = AlertDialog(
+        title: Text("görevleriniz: ${viewModel.controllers.length}"),
+        content: Text(text.trim()),
+        actions: [
+          TextButton(
+            onPressed: ()async{
+            bool isOk =  await viewModel.saveChanges();
+            if(isOk){
+             
+              "göreve atandınız".snackBarExtension(context);
+              Navigator.pop(context);
+              Navigator.pop(context);
+            }else{
+              "bir hata oluştu".snackBarExtension(context);
+            }
+            },
+            child: Text("OK"),
+          ),
+        ],
+      );
+      await showDialog(
+        context: context,
+        builder: (BuildContext context) => alert,
+      );
+      setState(() {});
+    },
+    child: Text("OK"),
+  );
+}
 }
