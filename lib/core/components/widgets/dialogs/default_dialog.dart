@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class DefaultDialog extends StatefulWidget {
   double? height;
   double? width;
@@ -30,7 +31,7 @@ void initState(){
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       backgroundColor:Theme.of(context).primaryColorLight,
-      child: Container(
+      child: SizedBox(
       height: widget.height,
       width: widget.width,
      child: Column(

@@ -19,7 +19,6 @@ class UserModelProvider implements FirestoreProvider<UserModel> {
 
   @override
   Future<List<UserModel>> getItemList() {
-    // TODO: implement getItemList
     throw UnimplementedError();
   }
 
@@ -50,19 +49,19 @@ class UserModelProvider implements FirestoreProvider<UserModel> {
 
   @override
   Future<void> removeAllItems() {
-    // TODO: implement removeAllItems
+   
     throw UnimplementedError();
   }
 
   @override
   Future<bool> removeItem(int id) {
-    // TODO: implement removeItem
+   
     throw UnimplementedError();
   }
 
   @override
   void setCollectionReference() {
-      this.collectionReference = FirebaseFirestore.instance
+      collectionReference = FirebaseFirestore.instance
         .collection(FirebaseConstants.USERS_PATH);
   }
 

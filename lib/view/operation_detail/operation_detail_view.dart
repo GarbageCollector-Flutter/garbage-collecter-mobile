@@ -111,7 +111,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
               left: 0,
               right: 0,
               top: 20,
-              child: Padding(padding: EdgeInsets.all(8.0), child: myAppBar)),
+              child: Padding(padding: const EdgeInsets.all(8.0), child: myAppBar)),
         ],
       ));
 
@@ -148,7 +148,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
                   for (UserOfficer userOfficer in viewModel.officers)
                     officer(userOfficer),
                   Container(
-                      margin: EdgeInsets.only(bottom: 50, top: 10),
+                      margin: const EdgeInsets.only(bottom: 50, top: 10),
                       child: beResponsibleButton),
                 ],
               ),
@@ -164,27 +164,27 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
             children: [
               Text(
                 viewModel.operationModel!.operationName,
-                style: TextStyle(fontSize: 30),
+                style: const TextStyle(fontSize: 30),
               ),
-              Divider(),
+              const Divider(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
                     viewModel.operationModel!.location,
-                    style: TextStyle(fontSize: 17),
+                    style: const TextStyle(fontSize: 17),
                   ),
                   Text(
-                    f.format(new DateTime.fromMillisecondsSinceEpoch(
+                    f.format(DateTime.fromMillisecondsSinceEpoch(
                         viewModel.operationModel!.operationStart)),
-                    style: TextStyle(fontSize: 17),
+                    style: const TextStyle(fontSize: 17),
                   )
                 ],
               )
             ],
           ));
         } else {
-          return SizedBox(
+          return const SizedBox(
             height: 0,
           );
         }
@@ -217,11 +217,11 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
             ],
           ),
         ),
-        Divider(),
+        const Divider(),
         SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: viewModel.operationModel!.beforePhoto.isEmpty
-                ? Container(
+                ? const SizedBox(
                     child: Center(
                         child: Text("+ butonu ile görsel ekleyebilirsiniz...")),
                     // color: Colors.black45,
@@ -245,7 +245,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
                         ),
                     ],
                   )),
-      ])):SizedBox();
+      ])):const SizedBox();
   Widget get afterPhotos => viewModel.operationModel !=null ?EmptySurface(
           child: Column(children: [
         Padding(
@@ -273,12 +273,12 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
                 )
               ],
             )),
-        Divider(),
+        const Divider(),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: viewModel.operationModel!.afterPhoto.isEmpty
-              ? Container(
-                  child: const Center(
+              ? const SizedBox(
+                  child: Center(
                       child: Text("+ butonu ile görsel ekleyebilirsiniz...")),
                   // color: Colors.black45,
                   height: 150.0,
@@ -299,14 +299,14 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
                     )
                 ]),
         ),
-      ])):SizedBox();
+      ])):const SizedBox();
 
   Widget get organizator => Observer(builder: (context) {
         if (viewModel.organizator != null) {
           return EmptySurface(
               child: Column(
             children: [
-              Text(
+              const Text(
                 "organizatör",
                 style: TextStyle(fontSize: 25),
               ),
@@ -316,11 +316,11 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
                 children: [
                   Text(
                     viewModel.organizator!.name,
-                    style: TextStyle(fontSize: 17),
+                    style: const TextStyle(fontSize: 17),
                   ),
                   Text(
                     viewModel.organizator!.phone,
-                    style: TextStyle(fontSize: 17),
+                    style: const TextStyle(fontSize: 17),
                   ),
                 ],
               )
@@ -334,31 +334,30 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
       });
 
   Widget get collecters => EmptySurface(
-          child: Container(
-              child: Column(
+          child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Icon(
-                  Icons.add,
-                  color: Colors.white,
-                ),
-                Text(
-                  "toplayıcılar",
-                  style: TextStyle(fontSize: 25),
-                ),
-               addOrRemoveCollecter
-               
-              ],
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+            const Text(
+              "toplayıcılar",
+              style: TextStyle(fontSize: 25),
+            ),
+           addOrRemoveCollecter
+           
+          ],
             ),
           ),
-          Divider(),
+          const Divider(),
           for (UserModel item in viewModel.garbage_collecters) playerScore(item)
         ],
-      )));
+      ));
 
   Widget playerScore(UserModel userModel) {
     rank++;
@@ -378,7 +377,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
             width: dynamicWidth(0.2),
             child: Text(
               (rank).toString(),
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             ),
           ),
           Container(
@@ -386,7 +385,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
             width: dynamicWidth(0.6),
             child: Text(
               userModel.name,
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             ),
           ),
         ],
@@ -400,36 +399,33 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Container(
-          
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "görevli",
-                  style: TextStyle(
-                    fontSize: 25,
-                  ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "görevli",
+                style: TextStyle(
+                  fontSize: 25,
                 ),
-                SizedBox(
-                  width: 20,
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              GestureDetector(
+                onTap: (){
+                  NavigationService.instance.navigateToPage(path: NavigationConstants.PROFILE,data: userOfficer.usermodel.phone);
+                },
+                
+                child: Text(
+                  "${userOfficer.usermodel.name}",
+                  style: const TextStyle(fontSize: 17, color: Color(0xff3366bb),),
+                 
                 ),
-                GestureDetector(
-                  onTap: (){
-                    NavigationService.instance.navigateToPage(path: NavigationConstants.PROFILE,data: userOfficer.usermodel.phone);
-                  },
-                  
-                  child: Text(
-                    "${userOfficer.usermodel.name}",
-                    style: TextStyle(fontSize: 17, color: Color(0xff3366bb),),
-                   
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-          Divider(),
+          const Divider(),
           for(String responsibility in userOfficer.officerModel.responsibilities)
                 
           responsibilityRankV2(responsibility)
@@ -457,7 +453,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
             width: dynamicWidth(0.2),
             child: Text(
               (officerRank).toString(),
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             ),
           ),
           Container(
@@ -465,7 +461,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
             width: dynamicWidth(0.6),
             child: Text(
               responsibility,
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             ),
           ),
         ],
@@ -488,7 +484,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
           } else {
             color = Colors.white;
           }
-          print("------------------------" + responsibilities[index]);
+      
           return Container(
             alignment: Alignment.topCenter,
             color: color,
@@ -503,7 +499,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
                     width: dynamicWidth(0.2),
                     child: Text(
                       (index+1).toString(),
-                      style: TextStyle(fontSize: 20),
+                      style: const TextStyle(fontSize: 20),
                     ),
                   ),
                   Container(
@@ -511,7 +507,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
                     width: dynamicWidth(0.6),
                     child: Text(
                       responsibilities[index],
-                      style: TextStyle(fontSize: 20),
+                      style: const TextStyle(fontSize: 20),
                     ),
                   ),
                 ],
@@ -532,7 +528,7 @@ NavigationService.instance.navigateToPage(path: NavigationConstants.OFFICER_FORM
         width: dynamicWidth(0.5),
         alignment: Alignment.center,
         height: 70,
-        child: Text(
+        child: const Text(
           "görevli ol",
           style: TextStyle(fontSize: 25),
         ),
@@ -548,7 +544,7 @@ Widget get addOrRemoveCollecter=>Observer(builder:(context){
               await  viewModel.getOperation();
                       "göreviniz iptal edildi".snackBarExtension(context);
                   },
-                  child: Center(
+                  child: const Center(
                     child: Icon(
                       Icons.remove,
                       size: 27,
@@ -566,7 +562,7 @@ return  GestureDetector(
                     
                     "göreve atandınız".snackBarExtension(context);
                   },
-                  child: Center(
+                  child: const Center(
                     child: Icon(
                       Icons.add,
                       size: 27,

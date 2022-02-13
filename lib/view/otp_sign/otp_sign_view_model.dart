@@ -38,7 +38,7 @@ abstract class _OtpSignViewModelBase with Store {
   void smsCodeSet(PhoneAuthCredential phoneAuthCredential) {
     this.phoneAuthCredential = phoneAuthCredential;
     smsCode = phoneAuthCredential.smsCode;
-    print("---------------smscode" + smsCode.toString());
+
   }
 
   void verificationIdSet(String verificationId, int? _) {

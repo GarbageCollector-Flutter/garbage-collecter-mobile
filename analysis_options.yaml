@@ -22,6 +22,19 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
+    lowercase_with_underscores: false
+    file_names: false
+    must_be_immutable: false
+    unused_element: false
+    camel_case_extensions: false
+    curly_braces_in_flow_control_structures: false
+    avoid_function_literals_in_foreach_calls: false
+    prefer_function_declarations_over_variables: false
+    non_constant_identifier_names: false
+    unnecessary_null_comparison: false
+    unnecessary_string_interpolations: false
+    tunrelated_type_equality_checks: false
+
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
 

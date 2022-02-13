@@ -43,7 +43,7 @@ class _LoginViewState extends BaseState<LoginView> {
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
               child: Text(
                 e,
-                style: TextStyle(color: Colors.white, fontSize: 25),
+                style: const TextStyle(color: Colors.white, fontSize: 25),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -52,7 +52,7 @@ class _LoginViewState extends BaseState<LoginView> {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  size: Size(150, 80))
+                  size: const Size(150, 80))
             ],
           );
         });
@@ -108,7 +108,7 @@ class _LoginViewState extends BaseState<LoginView> {
             left: dynamicWidth(0.1),
             right: dynamicWidth(0.1),
             top: dynamicHeight(0.1)),
-        child: Container(
+        child: SizedBox(
           width: dynamicWidth(1),
           child: SafeArea(child:
            Image.asset(ApplicationConstants.APP_ICON_PATH, color: ThemeData().primaryColor)),
