@@ -1,5 +1,3 @@
-import 'package:first_three/core/components/text/locale_text.dart';
-import 'package:first_three/core/init/lang/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 
 class NotFound extends StatelessWidget {

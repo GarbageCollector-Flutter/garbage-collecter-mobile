@@ -19,9 +19,6 @@ class _LoginInputtersState extends State<LoginInputters> {
         controller: widget.controller,
         key: widget.key,
         focusNode: widget.focusNode,
-        validator: (value) {
-
-        },
         cursorColor: Colors.black,
         cursorRadius: const Radius.circular(45),
         keyboardType: widget.textInputType ??TextInputType.phone,
