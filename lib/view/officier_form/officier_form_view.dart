@@ -134,7 +134,7 @@ return BaseView(
           controller: controller,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
-            labelText: "name${viewModel.controllers.length + 1}",
+            labelText: "görev ${viewModel.controllers.length + 1}",
           ),
         );
 
