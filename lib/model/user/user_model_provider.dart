@@ -1,5 +1,3 @@
-// ignore_for_file: curly_braces_in_flow_control_structures
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:first_three/core/constants/firebase/firebase_constatns.dart';
 import 'package:first_three/core/init/database/firestore_provider.dart';
@@ -21,7 +19,6 @@ class UserModelProvider implements FirestoreProvider<UserModel> {
 
   @override
   Future<List<UserModel>> getItemList() {
-    // ignore: todo
     // TODO: implement getItemList
     throw UnimplementedError();
   }
@@ -53,21 +50,18 @@ class UserModelProvider implements FirestoreProvider<UserModel> {
 
   @override
   Future<void> removeAllItems() {
-    // ignore: todo
     // TODO: implement removeAllItems
     throw UnimplementedError();
   }
 
   @override
   Future<bool> removeItem(int id) {
-    // ignore: todo
     // TODO: implement removeItem
     throw UnimplementedError();
   }
 
   @override
   void setCollectionReference() {
-      // ignore: unnecessary_this
       this.collectionReference = FirebaseFirestore.instance
         .collection(FirebaseConstants.USERS_PATH);
   }

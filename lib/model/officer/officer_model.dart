@@ -21,7 +21,6 @@ class OfficerModel extends DatabaseModel  {
 
   @override
   fromJson(Map<String, dynamic> json) {
-    // ignore: todo
     // TODO: implement fromJson
     throw UnimplementedError();
   }

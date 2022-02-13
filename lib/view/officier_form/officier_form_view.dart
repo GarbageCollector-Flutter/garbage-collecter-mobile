@@ -3,6 +3,8 @@ import 'package:first_three/core/base/view/base_view.dart';
 import 'package:first_three/core/components/widgets/buttons/cancel_button.dart';
 import 'package:first_three/core/components/widgets/cards/empty_surface.dart';
 import 'package:first_three/core/components/widgets/others/my_appbar.dart';
+import 'package:first_three/core/constants/navigation/navigation_constants.dart';
+import 'package:first_three/core/init/navigation/navigation_service.dart';
 import 'package:first_three/model/operations/operation_model.dart';
 import 'package:first_three/view/officier_form/officier_form_view_model.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +12,7 @@ import 'package:first_three/core/extenstions/string_extension.dart';
 
 
 class OfficierFormView extends StatefulWidget {
-  const OfficierFormView({Key? key}) : super(key: key);
+  OfficierFormView({Key? key}) : super(key: key);
 
   @override
   State<OfficierFormView> createState() => _OfficierFormViewState();
@@ -100,7 +102,7 @@ return BaseView(
               "bir hata oluştu".snackBarExtension(context);
             }
             },
-            child: const Text("OK"),
+            child: Text("OK"),
           ),
         ],
       );
@@ -110,7 +112,7 @@ return BaseView(
       );
       setState(() {});
 
-                    }, size: const Size(120,50),child: const Text("kaydet",style: TextStyle(fontSize: 25)),),
+                    }, size: Size(120,50),child: Text("kaydet",style: TextStyle(fontSize: 25)),),
       );
   Widget get body=>EmptySurface(
     
@@ -150,7 +152,7 @@ return BaseView(
     itemCount: viewModel.fields.length,
     itemBuilder: (context, index) {
       return Container(
-        margin: const EdgeInsets.all(5),
+        margin: EdgeInsets.all(5),
         child:  viewModel.fields[index],
       );
     },
@@ -158,13 +160,13 @@ return BaseView(
 }
     Widget _addTile() {
     return ListTile(
-      title: const Icon(Icons.add),
+      title: Icon(Icons.add),
       onTap: () {
         final controller = TextEditingController();
         final field = TextField(
           controller: controller,
           decoration: InputDecoration(
-            border: const OutlineInputBorder(),
+            border: OutlineInputBorder(),
             labelText: "görev ${viewModel.controllers.length + 1}",
           ),
         );
