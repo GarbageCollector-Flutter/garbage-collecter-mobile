@@ -37,32 +37,29 @@ class OperationModelProvider implements FirestoreProvider<OperationModel> {
       model.docId = documentReference.id;
       return model;
     } catch (e) {
-      print(e.toString());
+
       return null;
     }
   }
 
   @override
   Future<bool> isExist(OperationModel model) {
-    // TODO: implement isExist
     throw UnimplementedError();
   }
 
   @override
   Future<void> removeAllItems() {
-    // TODO: implement removeAllItems
     throw UnimplementedError();
   }
 
   @override
   Future<bool> removeItem(int id) {
-    // TODO: implement removeItem
     throw UnimplementedError();
   }
 
   @override
   void setCollectionReference() {
-    this.collectionReference = FirebaseFirestore.instance
+    collectionReference = FirebaseFirestore.instance
         .collection(FirebaseConstants.OPERATIONS_PATH);
   }
 

@@ -11,7 +11,7 @@ import 'package:first_three/core/extenstions/string_extension.dart';
 
 
 class OperationFormView extends StatefulWidget {
-  OperationFormView({Key? key}) : super(key: key);
+  const OperationFormView({Key? key}) : super(key: key);
 
   @override
   State<OperationFormView> createState() => _OperationFormViewState();
@@ -81,7 +81,7 @@ class _OperationFormViewState extends BaseState<OperationFormView> {
               "bir hata oluştu".snackBarExtension(context);
            }
 
-                    }, size: Size(120,50),child: Text("kaydet",style: TextStyle(fontSize: 25)),),
+                    }, size: const Size(120,50),child: const Text("kaydet",style: TextStyle(fontSize: 25)),),
       );
 
   Widget get body => SizedBox(
@@ -106,10 +106,10 @@ class _OperationFormViewState extends BaseState<OperationFormView> {
                     textAlign: TextAlign.center,
                     decoration: const InputDecoration(),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                   SizedBox(
+                   const SizedBox(
                     height: 20,
                   ),
                   timePickerStart,

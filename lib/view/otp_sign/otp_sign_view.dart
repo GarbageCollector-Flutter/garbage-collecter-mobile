@@ -155,10 +155,9 @@ class _OtpSignViewState extends BaseState<OtpSignView> {
         isTimerTextShown: true,
         autoStart: true,
         onStart: () {
-          //TODO start
         },
         onComplete: () {
-          print('Countdown Ended');
+  
         },
       );
 

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:first_three/core/constants/firebase/firebase_constatns.dart';
 import 'package:first_three/model/officer/officer_model.dart';

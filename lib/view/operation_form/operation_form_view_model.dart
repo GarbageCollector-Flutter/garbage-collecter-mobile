@@ -1,5 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:first_three/core/constants/firebase/firebase_constatns.dart';
+
 import 'package:first_three/model/operations/operation_model.dart';
 import 'package:first_three/model/operations/operation_model_provider.dart';
 import 'package:first_three/model/user/user_model.dart';
@@ -34,6 +33,7 @@ abstract class _OperationFormViewModelBase with Store {
 
   bool validateForm() {
     if (nameController.text != "" &&
+        // ignore: unrelated_type_equality_checks
         locationController != "" &&
         startTime.isAfter(DateTime.now())) {
       return true;

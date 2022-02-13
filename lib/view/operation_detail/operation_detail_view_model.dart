@@ -101,8 +101,7 @@ abstract class _OperationDetailViewModelBase with Store {
       String? userId = prefs.getString('currentUserPhone');
       if (userId != null) {
         var imgUrl = await StrageService().userimgUpload(imgFile, userId);
-        print("------------------" + imgUrl);
-
+    
         if (operationModel != null) {
           if (isBefore == true) {
             operationModel!.beforePhoto.add(imgUrl);
@@ -141,12 +140,10 @@ abstract class _OperationDetailViewModelBase with Store {
     String? userId = prefs.getString('currentUserPhone');
     if (userId != null) {
       if (operationModel != null) {
-        print(operationModel!.garbageCollecters.toString());
+      
 
         operationModel!.garbageCollecters
             .removeWhere((element) => element == userId);
-        print(operationModel!.garbageCollecters.toString());
-
         await operationModelProvider.updateItem(
             operationModel!.docId, operationModel!);
         if (currentUserModel != null) {
