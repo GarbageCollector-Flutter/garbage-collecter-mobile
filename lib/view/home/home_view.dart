@@ -112,6 +112,7 @@ class _HomeViewState extends BaseState<HomeView> {
                 await viewModel.getAllOperations(),
                 
             child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
               child: Column(
                 children: [
                   SizedBox(

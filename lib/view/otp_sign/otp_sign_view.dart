@@ -59,8 +59,8 @@ class _OtpSignViewState extends BaseState<OtpSignView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  nameText,
-                  phoneNumberText,
+              
+           
                   inputPin,
                   const SizedBox(
                     height: 20,
@@ -180,21 +180,6 @@ class _OtpSignViewState extends BaseState<OtpSignView> {
         ),
       );
 
-  Widget get phoneNumberText => Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: dynamicWidth(0.1), vertical: 10),
-        child: const Text(
-          '5***** 0208 no\' lu telefonunuza gönderilen sms şifresini giriniz',
-          style: TextStyle(
-              fontWeight: FontWeight.normal,
-              fontSize: 15,
-              color: Colors.black87),
-        ),
-      );
 
-  Widget get nameText => const Text(
-        'Sayın Onur Can Kurum',
-        style: TextStyle(
-            fontWeight: FontWeight.normal, fontSize: 20, color: Colors.black87),
-      );
+ 
 }

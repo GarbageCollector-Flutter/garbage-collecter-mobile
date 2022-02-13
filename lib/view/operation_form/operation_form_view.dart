@@ -7,6 +7,8 @@ import 'package:first_three/core/components/widgets/others/my_appbar.dart';
 import 'package:first_three/view/operation_form/operation_form_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:first_three/core/extenstions/string_extension.dart';
+
 
 class OperationFormView extends StatefulWidget {
   OperationFormView({Key? key}) : super(key: key);
@@ -73,7 +75,10 @@ class _OperationFormViewState extends BaseState<OperationFormView> {
            suffix: CancelButton(onTap: ()async{
            bool isOk = await viewModel.createOperation();
            if(isOk ==true){
+             "etkinlik oluşturuldu".snackBarExtension(context);
              Navigator.pop(context);
+           }else{
+              "bir hata oluştu".snackBarExtension(context);
            }
 
                     }, size: Size(120,50),child: Text("kaydet",style: TextStyle(fontSize: 25)),),

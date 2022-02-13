@@ -13,6 +13,8 @@ import 'package:first_three/view/operation_detail/operation_detail_view_model.da
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:first_three/core/extenstions/string_extension.dart';
+
 
 class OperationDetailView extends StatefulWidget {
   const OperationDetailView({Key? key}) : super(key: key);
@@ -60,9 +62,12 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
               onTap: () async {
                 File? imgFile = await _resimSec(ImageSource.gallery);
                 if (imgFile != null) {
-                  viewModel.addPhoto(imgFile: imgFile, isBefore: isBefore);
+                       Navigator.pop(context);
+               await   viewModel.addPhoto(imgFile: imgFile, isBefore: isBefore);
+                "resim yükleme işlemi tamamlandı".snackBarExtension(context);
                 }
-                Navigator.pop(context);
+           
+               
               },
             ),
             ListTile(
@@ -132,20 +137,23 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
         rank = 0;
         return SizedBox(
           height: dynamicHeight(1) - 110,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                OperationIdentity,
-                afterPhotos,
-                beforePhotos,
-                organizator,
-                collecters,
-                for (UserOfficer userOfficer in viewModel.officers)
-                  officer(userOfficer),
-                Container(
-                    margin: EdgeInsets.only(bottom: 50, top: 10),
-                    child: beResponsibleButton),
-              ],
+          child: RefreshIndicator(
+            onRefresh:  ()async=>viewModel.getOperation(),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  OperationIdentity,
+                  afterPhotos,
+                  beforePhotos,
+                  organizator,
+                  collecters,
+                  for (UserOfficer userOfficer in viewModel.officers)
+                    officer(userOfficer),
+                  Container(
+                      margin: EdgeInsets.only(bottom: 50, top: 10),
+                      child: beResponsibleButton),
+                ],
+              ),
             ),
           ),
         );
@@ -491,7 +499,8 @@ Widget get addOrRemoveCollecter=>Observer(builder:(context){
                   behavior: HitTestBehavior.opaque,
                   onTap: () async {
                await viewModel.removeCollecter();
-                viewModel.getOperation();
+              await  viewModel.getOperation();
+                      "göreviniz iptal edildi".snackBarExtension(context);
                   },
                   child: Center(
                     child: Icon(
@@ -508,6 +517,7 @@ return  GestureDetector(
                     await viewModel.addCollecter();
                     viewModel.getOperation();
                     rank = 0;
+                    "göreve atandınız".snackBarExtension(context);
                   },
                   child: Center(
                     child: Icon(

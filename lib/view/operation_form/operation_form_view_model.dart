@@ -62,6 +62,7 @@ abstract class _OperationFormViewModelBase with Store {
       if (userModel != null && operationModel != null) {
         userModel.joinedOperations.add(operationModel.docId);
         return await userModelProvider.updateItem(userModel.phone, userModel);
+        
       }
     }
     return false;
