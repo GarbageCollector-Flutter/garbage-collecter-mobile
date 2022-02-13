@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:first_three/core/constants/firebase/firebase_constatns.dart';
@@ -44,6 +43,7 @@ abstract class _OfficierFormViewModelBase with Store {
     if (userModel != null) {
       officerModel =
           OfficerModel(userId: userModel!.phone, responsibilities: []);
+      // ignore: avoid_function_literals_in_foreach_calls
       controllers.forEach((element) {
         if (element.text != "") {
           officerModel!.responsibilities.add(element.text);
