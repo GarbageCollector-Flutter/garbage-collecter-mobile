@@ -60,6 +60,8 @@ abstract class _OperationFormViewModelBase with Store {
       operationModel = await operationModelProvider.insertItem(operationModel);
       UserModel? userModel = await getCurrentUser();
       if (userModel != null && operationModel != null) {
+           
+
         userModel.joinedOperations.add(operationModel.docId);
         return await userModelProvider.updateItem(userModel.phone, userModel);
         

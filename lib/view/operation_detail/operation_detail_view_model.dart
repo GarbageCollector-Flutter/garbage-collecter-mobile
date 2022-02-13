@@ -65,7 +65,6 @@ abstract class _OperationDetailViewModelBase with Store {
     operationModel = await operationModelProvider.getItem(operationPath);
     organizator = await userModelProvider.getItem(operationModel!.organizator);
     await getCollecters();
-
     await getOfficers();
   }
 
@@ -81,6 +80,7 @@ abstract class _OperationDetailViewModelBase with Store {
 
   Future<void> getOfficers() async {
     setOfficerPath();
+    officers.clear();
     List<OfficerModel> officerModels = [];
     officerModels = await officerModelProvider.getItemList();
     for (OfficerModel officerModel in officerModels) {

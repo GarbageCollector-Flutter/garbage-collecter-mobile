@@ -27,6 +27,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
   late OperationDetailViewModel viewModel;
   final f = DateFormat('yyyy-MM-dd hh:mm');
   int rank = 0;
+  int officerRank=0;
 
   File? imgFile;
   String? tempFotoUrl;
@@ -40,10 +41,6 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
       imgFile = File(secilen.path);
       return imgFile;
 
-      //upload firabase
-      //     var url = await StrageService().userimgUpload(imgFile!, userID);
-
-      // setState(() {});
     } else {
       return null;
     }
@@ -81,6 +78,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
       ),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -135,6 +133,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
 
   Widget get body => Observer(builder: (context) {
         rank = 0;
+        officerRank=0;
         return SizedBox(
           height: dynamicHeight(1) - 110,
           child: RefreshIndicator(
@@ -239,8 +238,8 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
                             borderRadius: BorderRadius.circular(8.0),
                             child: Image.network(
                               imgUrl,
-                              height: 150.0,
-                              width: 100.0,
+                              height: 250.0,
+                           
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -293,9 +292,9 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
                         borderRadius: BorderRadius.circular(8.0),
                         child: Image.network(
                           imgUrl,
-                          height: 150.0,
-                          width: 100.0,
-                          fit: BoxFit.fill,
+                          height: 250.0,
+                       
+                          fit: BoxFit.fitHeight,
                         ),
                       ),
                     )
@@ -372,30 +371,26 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
     }
     return Container(
       color: color,
-      margin: EdgeInsets.symmetric(vertical: 10),
-      child: Container(
-        color: color,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              alignment: Alignment.center,
-              width: dynamicWidth(0.2),
-              child: Text(
-                rank.toString(),
-                style: TextStyle(fontSize: 20),
-              ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Container(
+            alignment: Alignment.center,
+            width: dynamicWidth(0.2),
+            child: Text(
+              (rank).toString(),
+              style: TextStyle(fontSize: 20),
             ),
-            Container(
-              alignment: Alignment.center,
-              width: dynamicWidth(0.6),
-              child: Text(
-                userModel.name,
-                style: TextStyle(fontSize: 20),
-              ),
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            width: dynamicWidth(0.6),
+            child: Text(
+              userModel.name,
+              style: TextStyle(fontSize: 20),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -403,38 +398,88 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
   Widget officer(UserOfficer userOfficer) {
     return EmptySurface(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "görevli",
-                style: TextStyle(
-                  fontSize: 25,
+          Container(
+          
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "görevli",
+                  style: TextStyle(
+                    fontSize: 25,
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Text(
-                "${userOfficer.usermodel.name}",
-                style: TextStyle(fontSize: 17, color: Color(0xff3366bb)),
-              ),
-            ],
+                SizedBox(
+                  width: 20,
+                ),
+                GestureDetector(
+                  onTap: (){
+                    NavigationService.instance.navigateToPage(path: NavigationConstants.PROFILE,data: viewModel.currentUserModel!.phone);
+                  },
+                  
+                  child: Text(
+                    "${userOfficer.usermodel.name}",
+                    style: TextStyle(fontSize: 17, color: Color(0xff3366bb),),
+                   
+                  ),
+                ),
+              ],
+            ),
           ),
           Divider(),
-          responsibilityRank(userOfficer.officerModel.responsibilities)
+          for(String responsibility in userOfficer.officerModel.responsibilities)
+                
+          responsibilityRankV2(responsibility)
           //  Text(userOfficer.usermodel.name)
+        ],
+      ),
+    );
+  }
+    Widget responsibilityRankV2(String responsibility) {
+   
+     officerRank ++;
+    Color color;
+    if (officerRank % 2 == 1) {
+      color = Colors.grey.withOpacity(0.1);
+    } else {
+      color = Colors.white;
+    }
+    return Container(
+      color: color,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Container(
+            alignment: Alignment.center,
+            width: dynamicWidth(0.2),
+            child: Text(
+              (officerRank).toString(),
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            width: dynamicWidth(0.6),
+            child: Text(
+              responsibility,
+              style: TextStyle(fontSize: 20),
+            ),
+          ),
         ],
       ),
     );
   }
 
   Widget responsibilityRank(List<String> responsibilities) {
+   
     return Container(
-      height: responsibilities.length * 40 + 50,
+      alignment: Alignment.topCenter,
+      height: responsibilities.length * 40+ 40,
       child: ListView.builder(
+        
         itemCount: responsibilities.length,
         itemBuilder: (BuildContext context, int index) {
           Color color;
@@ -445,23 +490,24 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
           }
           print("------------------------" + responsibilities[index]);
           return Container(
+            alignment: Alignment.topCenter,
             color: color,
             height: 40,
             child: Container(
               color: color,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
                     alignment: Alignment.center,
                     width: dynamicWidth(0.2),
                     child: Text(
-                      index.toString(),
+                      (index+1).toString(),
                       style: TextStyle(fontSize: 20),
                     ),
                   ),
                   Container(
-                    alignment: Alignment.center,
+                    alignment: Alignment.centerLeft,
                     width: dynamicWidth(0.6),
                     child: Text(
                       responsibilities[index],
@@ -517,6 +563,7 @@ return  GestureDetector(
                     await viewModel.addCollecter();
                     viewModel.getOperation();
                     rank = 0;
+                    
                     "göreve atandınız".snackBarExtension(context);
                   },
                   child: Center(
