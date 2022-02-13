@@ -1,5 +1,6 @@
 import 'package:first_three/core/base/state/base_state.dart';
 import 'package:first_three/core/base/view/base_view.dart';
+import 'package:first_three/core/components/widgets/buttons/cancel_button.dart';
 import 'package:first_three/core/components/widgets/cards/empty_surface.dart';
 import 'package:first_three/core/components/widgets/others/my_appbar.dart';
 import 'package:first_three/core/constants/navigation/navigation_constants.dart';
@@ -80,6 +81,38 @@ return BaseView(
           "Profil",
           style: TextStyle(fontSize: 22, color: Colors.white),
         ),
+        suffix: CancelButton(onTap: ()async{
+          
+           String text = viewModel.controllers
+          .where((element) => element.text != "")
+          .fold("", (acc, element) => acc += "${element.text}\n");
+      final alert = AlertDialog(
+        title: Text("görevleriniz: ${viewModel.controllers.length}"),
+        content: Text(text.trim()),
+        actions: [
+          TextButton(
+            onPressed: ()async{
+            bool isOk =  await viewModel.saveChanges();
+            if(isOk){
+             
+              "göreve atandınız".snackBarExtension(context);
+              Navigator.pop(context);
+              Navigator.pop(context);
+            }else{
+              "bir hata oluştu".snackBarExtension(context);
+            }
+            },
+            child: Text("OK"),
+          ),
+        ],
+      );
+      await showDialog(
+        context: context,
+        builder: (BuildContext context) => alert,
+      );
+      setState(() {});
+
+                    }, size: Size(120,50),child: Text("kaydet",style: TextStyle(fontSize: 25)),),
       );
   Widget get body=>EmptySurface(
     
@@ -95,7 +128,7 @@ return BaseView(
             Expanded(
               flex: 1,
               child: _listView()),
-            _okButton(),
+     
            
               ],
             ),
@@ -145,40 +178,5 @@ return BaseView(
       },
     );
   }
-  Widget _okButton() {
-  return ElevatedButton(
-    onPressed: () async {
-       
-           String text = viewModel.controllers
-          .where((element) => element.text != "")
-          .fold("", (acc, element) => acc += "${element.text}\n");
-      final alert = AlertDialog(
-        title: Text("görevleriniz: ${viewModel.controllers.length}"),
-        content: Text(text.trim()),
-        actions: [
-          TextButton(
-            onPressed: ()async{
-            bool isOk =  await viewModel.saveChanges();
-            if(isOk){
-             
-              "göreve atandınız".snackBarExtension(context);
-              Navigator.pop(context);
-              Navigator.pop(context);
-            }else{
-              "bir hata oluştu".snackBarExtension(context);
-            }
-            },
-            child: Text("OK"),
-          ),
-        ],
-      );
-      await showDialog(
-        context: context,
-        builder: (BuildContext context) => alert,
-      );
-      setState(() {});
-    },
-    child: Text("OK"),
-  );
-}
+
 }
