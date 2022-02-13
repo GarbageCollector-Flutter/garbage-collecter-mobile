@@ -132,8 +132,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
       );
 
   Widget get body => Observer(builder: (context) {
-        rank = 0;
-        officerRank=0;
+     rank=0;
         return SizedBox(
           height: dynamicHeight(1) - 110,
           child: RefreshIndicator(
@@ -396,6 +395,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
   }
 
   Widget officer(UserOfficer userOfficer) {
+    officerRank=0;
     return EmptySurface(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -417,7 +417,7 @@ class _OperationDetailViewState extends BaseState<OperationDetailView> {
                 ),
                 GestureDetector(
                   onTap: (){
-                    NavigationService.instance.navigateToPage(path: NavigationConstants.PROFILE,data: viewModel.currentUserModel!.phone);
+                    NavigationService.instance.navigateToPage(path: NavigationConstants.PROFILE,data: userOfficer.usermodel.phone);
                   },
                   
                   child: Text(
