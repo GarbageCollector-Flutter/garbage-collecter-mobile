@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 
-// ignore: must_be_immutable
 class MultiPurposeCard extends StatefulWidget {
   Widget? rightTopCorner;
   Widget? title;

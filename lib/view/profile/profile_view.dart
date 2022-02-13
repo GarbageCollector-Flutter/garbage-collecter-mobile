@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class ProfileView extends StatefulWidget {
-  const ProfileView({Key? key}) : super(key: key);
+  ProfileView({Key? key}) : super(key: key);
 
   @override
   State<ProfileView> createState() => _ProfileViewState();
@@ -80,7 +80,7 @@ class _ProfileViewState extends BaseState<ProfileView> {
           child: RefreshIndicator(
             onRefresh: () async => await viewModel.getUser(),
             child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
+              physics: AlwaysScrollableScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [userIdentity, operations, createNewOperation],
@@ -152,7 +152,7 @@ class _ProfileViewState extends BaseState<ProfileView> {
               ],
             );
           } else {
-            return const SizedBox();
+            return SizedBox();
           }
         },
       ));
@@ -165,7 +165,7 @@ class _ProfileViewState extends BaseState<ProfileView> {
         width: dynamicWidth(0.5),
         alignment: Alignment.center,
         height: 70,
-        child: const Text(
+        child: Text(
           "Etkinlik Oluştur",
           style: TextStyle(fontSize: 25),
         ),

@@ -1,4 +1,6 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:first_three/core/constants/firebase/firebase_constatns.dart';
 import 'package:first_three/core/constants/navigation/navigation_constants.dart';
 import 'package:first_three/core/init/navigation/navigation_service.dart';
 import 'package:first_three/model/user/user_model.dart';
@@ -31,7 +33,6 @@ abstract class _LoginViewModelBase with Store {
       throw ("bu numaraya ait kayıt mevcut lütfen giriş yapınız");
     }
     UserModel userModel = await userFirestoreProvider.insertItem(playerModel);
-    // ignore: unnecessary_null_comparison
     if(userModel !=null){
       return true;
     }
@@ -39,7 +40,6 @@ abstract class _LoginViewModelBase with Store {
   }
 
   phoneNumberValidator() {
-    // ignore: todo
     //TODO
     // login veya register request kısmında hata döndür view de try catch ile yakala d,alog ekranı hazır.
   }

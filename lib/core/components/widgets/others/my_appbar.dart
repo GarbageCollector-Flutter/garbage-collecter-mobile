@@ -42,7 +42,7 @@ class _MyAppBarState extends State<MyAppBar> {
           ],
         ),
         child: SingleChildScrollView(
-          physics: const NeverScrollableScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
           child: Column(
             children: [
               firstDefaultItem,
@@ -69,23 +69,25 @@ class _MyAppBarState extends State<MyAppBar> {
                   width: 0,
                 ),
             widget.buttons != null
-                ? GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () {
-                    if (widget.onChange != null) {
-                      widget.onChange!();
-                    }
+                ? Container(
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        if (widget.onChange != null) {
+                          widget.onChange!();
+                        }
 
-                    setState(() {
-                      _isMenuOpen == false
-                          ? _isMenuOpen = true
-                          : _isMenuOpen = false;
-                    });
-                  },
-                  child: Icon(Icons.menu,
-                      size: 40,
-                      color: _isMenuOpen ? Colors.blue : Colors.grey[300]),
-                )
+                        setState(() {
+                          _isMenuOpen == false
+                              ? _isMenuOpen = true
+                              : _isMenuOpen = false;
+                        });
+                      },
+                      child: Icon(Icons.menu,
+                          size: 40,
+                          color: _isMenuOpen ? Colors.blue : Colors.grey[300]),
+                    ),
+                  )
                 : widget.suffix?? const Text("            ")
           ],
         ),

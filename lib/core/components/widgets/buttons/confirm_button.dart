@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
 class ConfirmButton extends StatefulWidget {
   Function onTap;
     Size size;

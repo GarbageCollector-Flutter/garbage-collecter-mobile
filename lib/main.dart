@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
                       return const CircularProgressIndicator();
                     }
                     if (userSnapshot.hasData) {
-                      return const HomeView();
+                      return HomeView();
                     } else {
                       return const LoginView();
                     }
